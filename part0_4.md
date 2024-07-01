@@ -14,4 +14,8 @@ sequenceDiagram
 
     browser->>server: GET data JSON
     server->>browser: data JSON
+
+    Note right of browser: server creates note obj
+    Note right of browser: server push note obj to notes array
+    Note right of browser: server render new_note content
 ```
