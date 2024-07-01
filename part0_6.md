@@ -7,6 +7,6 @@ sequenceDiagram
     server->>browser: 201 status code, stays on page
 
     browser->>server: note renders, new note to server
-    server->>browser: sent as HTTP POST, data as JSON
+    server->>browser: sent as HTTP POST, data as  parse, push to notes array
     
 ```
