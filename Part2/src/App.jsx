@@ -1,5 +1,16 @@
 import { useState } from 'react'
 
+
+const setNeutral = () => {
+  neutral += 1;
+}
+
+const setBad = () => {
+  bad += 1;
+}
+
+
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
@@ -8,7 +19,16 @@ const App = () => {
 
   return (
     <div>
-      code here
+      <button onClick={() => {console.log(good)}}>
+          Good
+         
+      </button>
+      <button onClick={() => {setNeutral}}>
+          Neutral
+      </button>
+      <button onClick={() => {setBad}}>
+          Bad
+      </button>
     </div>
   )
 }
