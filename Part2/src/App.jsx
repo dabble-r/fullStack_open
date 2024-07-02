@@ -1,15 +1,9 @@
 import { useState } from 'react'
 
 
-const setNeutral = () => {
-  neutral += 1;
+const Display = (props) => {
+  return <div>{props.value}</div>
 }
-
-const setBad = () => {
-  bad += 1;
-}
-
-
 
 const App = () => {
   // save clicks of each button to its own state
@@ -17,20 +11,33 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  const handleClickGood = () => {
+    setGood(good + 1);
+    //console.log(good);
+  }
+
+  const handleClickNeutral = () => {
+    setNeutral(neutral + 1);
+    //console.log(neutral);
+  }
+
+  const handleClickBad = () => {
+    setBad(bad + 1);
+    console.log(bad);
+  }
+
   return (
     <div>
-      <button onClick={() => {console.log(good)}}>
-          Good
-         
-      </button>
-      <button onClick={() => {setNeutral}}>
-          Neutral
-      </button>
-      <button onClick={() => {setBad}}>
-          Bad
-      </button>
+      <button onClick={handleClickGood}>Good</button>
+      <button onClick={handleClickNeutral}>Neutral</button>
+      <button onClick={handleClickBad}>Bad</button>
+      <Display />
     </div>
   )
 }
+
+
+
+
 
 export default App
