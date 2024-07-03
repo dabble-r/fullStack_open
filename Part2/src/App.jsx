@@ -1,7 +1,16 @@
 import { useState } from 'react'
 
 
-const Display = (props) => {
+
+const Display1 = () => {
+  return <div>
+            <h2>Statistics</h2>
+            <p>No feedback given</p>
+         </div>
+}
+
+
+const Display2 = (props) => {
  return   <div>
             <p>Good {props.good}</p>
             <p>Neutral {props.neutral}</p>
@@ -21,9 +30,7 @@ const Statistics = (props) => {
 }
 
 
-
 const Button = (props) => {
-  
   return <button onClick={props.handleClick}>
                 {props.text}
         </button>
@@ -46,8 +53,7 @@ const App = () => {
           acc += curr;
           return acc ? acc : 0;
       },0) / total.length)
-      setPositive(positive.concat(1));
-      
+      setPositive(positive.concat(1)); 
     }
 
     const handleClickNeutral = () => {
@@ -68,17 +74,25 @@ const App = () => {
       },0) / total.length)
     }
 
-  
-  return (
-    <div>
-      <Button handleClick={handleClickGood} text='good' />
-      <Button handleClick={handleClickNeutral} text='neutral' />
-      <Button handleClick={handleClickBad} text='bad' />
-      <Display good={good} bad={bad} neutral={neutral} />
-      <Statistics total={total.length} average={average.toFixed(2)} positive={(positive.length / total.length).toFixed(2) * 100} />
-    </div>
-  )
-
+  return !total.length ?  
+      (
+        <div>
+          <Button handleClick={handleClickGood} text='good' />
+          <Button handleClick={handleClickNeutral} text='neutral' />
+          <Button handleClick={handleClickBad} text='bad' />
+          <Display1 />
+        </div>
+      )
+      : 
+      (
+        <div>
+          <Button handleClick={handleClickGood} text='good' />
+          <Button handleClick={handleClickNeutral} text='neutral' />
+          <Button handleClick={handleClickBad} text='bad' />
+          <Display2 good={good} bad={bad} neutral={neutral} />
+          <Statistics total={total.length} average={average.toFixed(2)} positive={(positive.length / total.length).toFixed(2) * 100} />
+        </div>
+      )
 }
 
 
