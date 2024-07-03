@@ -2,13 +2,28 @@ import { useState } from 'react'
 
 
 const Display = (props) => {
- return <div> Statistics
-          <p>Total number of votes is {props.total}</p>
-          <p>Good {props.good}</p>
-          <p>Neutral {props.neutral}</p>
-          <p>Bad {props.bad}</p>
-        </div>
+ return   <div>
+            <p>Good {props.good}</p>
+            <p>Neutral {props.neutral}</p>
+            <p>Bad {props.bad}</p>
+          </div>
 }
+
+const Total = (props) => {
+  return <div>
+            <h2>Statistics</h2>
+            <p>The toal number of votes is {props.total}</p>
+         </div>;
+}
+
+const Button = (props) => {
+  return <button onClick={props.handleClick}>
+                {props.text}
+        </button>
+}
+    
+
+
 
 const App = () => {
   // save clicks of each button to its own state
@@ -20,29 +35,28 @@ const App = () => {
 
   const handleClickGood = () => {
     setGood(good + 1);
-    //console.log(good);
+    setValue(value + 1);
   }
 
   const handleClickNeutral = () => {
     setNeutral(neutral + 1);
-    //console.log(neutral);
+    setValue(value + 1);
   }
 
   const handleClickBad = () => {
     setBad(bad + 1);
-    //console.log(bad);
+    setValue(value + 1)
   }
 
-  const setToValue = (newVal) => {
-    setValue(newVal);
-  }
+  
 
   return (
     <div>
-      <button onClick={handleClickGood}>Good</button>
-      <button onClick={handleClickNeutral}>Neutral</button>
-      <button onClick={handleClickBad}>Bad</button>
-      <Display total={good + bad + neutral} good={good} neutral={neutral} bad={bad}/>
+      <Button handleClick={handleClickGood} text='good' />
+      <Button handleClick={handleClickNeutral} text='neutral' />
+      <Button handleClick={handleClickBad} text='bad' />
+      <Display good={good} bad={bad} neutral={neutral}/>
+      <Total total={value}/>
     </div>
   )
 }
