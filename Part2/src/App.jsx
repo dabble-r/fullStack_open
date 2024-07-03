@@ -10,24 +10,19 @@ const Display1 = () => {
 }
 
 
-const Display2 = (props) => {
- return   <div>
-            <p>Good {props.good}</p>
-            <p>Neutral {props.neutral}</p>
-            <p>Bad {props.bad}</p>
-          </div>
-}
 
 
-const Statistics = (props) => {
+
+
+
+const StatisticsLine = (props) => {
   return <div>
-            <h2>Statistics</h2>
-            <p>The toal number of votes is {props.total}</p>
-            <h2>Averages</h2>
-            <p>The average vote is: {props.average}</p>
-            <p>The positive vote rate is at {props.positive}%</p>
-         </div>;
+            <h2>{props.heading}</h2>
+            <p>{props.text} {props.value}</p>
+         </div>
 }
+
+
 
 
 const Button = (props) => {
@@ -74,7 +69,7 @@ const App = () => {
       },0) / total.length)
     }
 
-  return !total.length ?  
+    return !total.length ?  
       (
         <div>
           <Button handleClick={handleClickGood} text='good' />
@@ -89,8 +84,12 @@ const App = () => {
           <Button handleClick={handleClickGood} text='good' />
           <Button handleClick={handleClickNeutral} text='neutral' />
           <Button handleClick={handleClickBad} text='bad' />
-          <Display2 good={good} bad={bad} neutral={neutral} />
-          <Statistics total={total.length} average={average.toFixed(2)} positive={(positive.length / total.length).toFixed(2) * 100} />
+          <StatisticsLine text="Good" value={good} />
+          <StatisticsLine text="Neutral" value={neutral} />
+          <StatisticsLine text="Bad" value={bad} />
+          <StatisticsLine heading='Statistics' text="Total votes:" value={total.length} />
+          <StatisticsLine text="Average" value={average.toFixed(2)} />
+          <StatisticsLine text="Positive rate: " value={(positive.length / total.length).toFixed(2) * 100 + '%'} />
         </div>
       )
 }
