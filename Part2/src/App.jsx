@@ -89,7 +89,7 @@ const App = () => {
           <StatisticsLine text="Bad" value={bad} />
           <StatisticsLine heading='Statistics' text="Total votes:" value={total.length} />
           <StatisticsLine text="Average" value={average.toFixed(2)} />
-          <StatisticsLine text="Positive rate: " value={(positive.length / total.length).toFixed(2) * 100 + '%'} />
+          <StatisticsLine text="Positive rate: " value={(positive.length / total.length).toFixed(1) * 100 + '%'} />
         </div>
       )
 }
