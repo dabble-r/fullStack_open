@@ -10,7 +10,7 @@ const Display = (props) => {
 }
 
 
-const Total = (props) => {
+const Statistics = (props) => {
   return <div>
             <h2>Statistics</h2>
             <p>The toal number of votes is {props.total}</p>
@@ -19,6 +19,7 @@ const Total = (props) => {
             <p>The positive vote rate is at {props.positive}%</p>
          </div>;
 }
+
 
 
 const Button = (props) => {
@@ -74,7 +75,7 @@ const App = () => {
       <Button handleClick={handleClickNeutral} text='neutral' />
       <Button handleClick={handleClickBad} text='bad' />
       <Display good={good} bad={bad} neutral={neutral} />
-      <Total total={total.length} average={average} positive={(positive.length / total.length).toFixed(2) * 100} />
+      <Statistics total={total.length} average={average.toFixed(2)} positive={(positive.length / total.length).toFixed(2) * 100} />
     </div>
   )
 
