@@ -57,7 +57,7 @@ const App = () => {
       setAverage(total.reduce((acc,curr)=>{
         acc += curr;
         return acc ? acc : 0;
-      },) / total.length)
+      },0) / total.length)
     }
 
     const handleClickBad = () => {
@@ -77,8 +77,21 @@ const App = () => {
           <Button handleClick={handleClickBad} text='bad' />
           <Display1 />
         </div>
+      ) : total.length === 1
+      ? 
+      (
+        <div>
+          <Button handleClick={handleClickGood} text='good' />
+          <Button handleClick={handleClickNeutral} text='neutral' />
+          <Button handleClick={handleClickBad} text='bad' />
+          <StatisticsLine text="Good" value={good} />
+          <StatisticsLine text="Neutral" value={neutral} />
+          <StatisticsLine text="Bad" value={bad} />
+          <StatisticsLine heading='Statistics' text="Total votes:" value={total.length} />
+          <StatisticsLine text="Positive rate: " value={(positive.length / total.length).toFixed(1) * 100 + '%'} />
+        </div>
       )
-      : 
+      :
       (
         <div>
           <Button handleClick={handleClickGood} text='good' />
