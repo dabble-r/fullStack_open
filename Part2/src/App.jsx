@@ -19,20 +19,29 @@ const StatisticsLine = (props) => {
 }
 
 
-const Button = (props) => {
+const Button1 = (props) => {
   return <div>
             <button onClick={props.handleClick}>
                 {props.text} 
             </button>
-            <button>
-              {props.text2}
-            </button>
-            <p>{props.quote}</p>
         </div>
-  
-       
 }
     
+
+const Button2 = (props) => {
+  return <div>
+            <h2>Anecdote</h2>
+            <p>{props.quote}</p>
+            <p>{props.votes}</p>
+            <button onClick={props.handleClick1}>
+              {props.text}
+            </button>
+            <button onClick={props.handleClick2}>
+              {props.text2}
+            </button>
+        </div>
+}
+
 
 const Table = (props) => {
   return <table>
@@ -93,6 +102,10 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
+  
+  
+  
+
   // save clicks of each button to its own state
     const [good, setGood] = useState(0)
     const [neutral, setNeutral] = useState(0)
@@ -101,6 +114,10 @@ const App = () => {
     const [average, setAverage] = useState(0);
     const [positive, setPositive] = useState([]);
     const [selected, useSelected] = useState(anecdotes[0]);
+    const [points, usePoints] = useState({});
+    
+    const copy = { ...points };
+
 
     const handleClickGood = () => {
       setGood(good + 1);
@@ -131,45 +148,59 @@ const App = () => {
     }
 
     const handleClickAnecdote = () => {
-      
-      
       let indx = Math.floor(Math.random() * anecdotes.length);
       useSelected(anecdotes[indx]);
-
       return selected;
     } 
 
+    const handleClickVote = () => {
 
-    return !total.length ?  
+      if (!copy.hasOwnProperty(selected)) {
+        copy[selected] = 1;
+        
+      } else if (copy.hasOwnProperty(selected)) {
+        copy[selected]++;
+        
+      }
+      
+      console.log(copy)
+      usePoints(copy);
+      return copy[selected];
+    }
+
+
+    return !copy[selected]   ?  
       (
         <div>
-          <Button handleClick={handleClickGood} text='good' />
-          <Button handleClick={handleClickNeutral} text='neutral' />
-          <Button handleClick={handleClickBad} text='bad' />
-          <Table text="No feedback given"/>
-          <Button text="next anecdote" text2="vote" quote={selected} handleClick={handleClickAnecdote}/>
+          <Button1 handleClick={handleClickGood} text='good' />
+          <Button1 handleClick={handleClickNeutral} text='neutral' />
+          <Button1 handleClick={handleClickBad} text='bad' />
+          <Table text="No feedback given" quote={selected}/>
+          <Button2 text="Anecdote" text2="Vote" handleClick1={handleClickAnecdote} handleClick2={handleClickVote} quote={selected} votes={`This quote has no votes yet.`}/>
+          
           
         </div>
-      ) : total.length === 1
-      ? 
+        
+      ) : copy[selected] >= 1 ?
+       
       (
         <div>
-          <Button handleClick={handleClickGood} text='good' />
-          <Button handleClick={handleClickNeutral} text='neutral' />
-          <Button handleClick={handleClickBad} text='bad' />
+          <Button1 handleClick={handleClickGood} text='good' />
+          <Button1 handleClick={handleClickNeutral} text='neutral' />
+          <Button1 handleClick={handleClickBad} text='bad' />
           <Table good={good} neutral={neutral} bad={bad} total={total.length} />
-          <Button text="next anecdote" text2="vote" quote={selected} handleClick={handleClickAnecdote}/>
+          <Button2 text="Anecdote" text2="Vote" handleClick1={handleClickAnecdote} handleClick2={handleClickVote} quote={selected} votes={`This quote has ${copy[selected]} vote(s).`}/>
           
         </div>
       )
       :
       (
         <div>
-          <Button handleClick={handleClickGood} text='good' />
-          <Button handleClick={handleClickNeutral} text='neutral' />
-          <Button handleClick={handleClickBad} text='bad' />
+          <Button1 handleClick={handleClickGood} text='good' />
+          <Button1 handleClick={handleClickNeutral} text='neutral' />
+          <Button1 handleClick={handleClickBad} text='bad' />
           <Table good={good} neutral={neutral} bad={bad} total={total.length} average={average.toFixed(1)} positive={(positive.length / total.length).toFixed(1) * 100 + '%'}/>
-          <Button text="next anecdote" text2="vote" quote={selected} handleClick={handleClickAnecdote}/>
+          <Button2 text="Anecdote" text2="Vote" handleClick1={handleClickAnecdote} handleClick2={handleClickVote} quote={selected} votes={`This quote has ${copy[selected]} vote(s).`}/>
           
         </div>
       )
@@ -198,5 +229,9 @@ const App = () => {
           <StatisticsLine text="Positive rate: " value={(positive.length / total.length).toFixed(1) * 100 + '%'} />
 */
 
-
+/*
+//anecdote button
+<Button1 text="next anecdote" />
+text2="vote" quote={selected} handleClick={handleClickAnecdote}
+*/
 export default App
