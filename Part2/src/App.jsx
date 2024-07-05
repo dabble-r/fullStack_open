@@ -115,7 +115,7 @@ const App = () => {
     const [positive, setPositive] = useState([]);
     const [selected, useSelected] = useState(anecdotes[0]);
     const [points, usePoints] = useState({});
-    const [mostPoints, setMostPoints] = useState([0]);
+    const [mostPoints, setMostPoints] = useState([['',0]]);
     
     const copy = { ...points };
 
@@ -163,12 +163,15 @@ const App = () => {
       usePoints(copy);
 
       for (let key in copy) {
-        if (copy[key] > mostPoints[0]) {
+        if (copy[key] > mostPoints[0][1]) {
           mostPoints.pop();
-          mostPoints.push(copy[key]);
+          mostPoints.push([key,copy[key]]);
         }
+        setMostPoints(mostPoints);
       }
-      setMostPoints(mostPoints);
+      
+     // console.log(copy)
+      console.log(mostPoints)
     }
 
     
@@ -184,8 +187,7 @@ const App = () => {
          
           <div>
               <h2>Anecdote with most votes:</h2>
-              <p>{selected}</p>
-              <p>{mostPoints}</p>
+              <p>{`The quote of '${mostPoints[0][0]}' has the most votes at ${mostPoints[0][1]}`}</p>
           </div>
         </div>
         
@@ -197,11 +199,12 @@ const App = () => {
           <Button1 handleClick={handleClickNeutral} text='neutral' />
           <Button1 handleClick={handleClickBad} text='bad' />
           <Table good={good} neutral={neutral} bad={bad} total={total.length} />
-          <Button2 text="Anecdote" text2="Vote" handleClick1={handleClickAnecdote} handleClick2={handleClickVote} quote={selected} votes={`This quote has ${copy[selected]} vote(s).`} most={mostPoints[0]} />
+          <Button2 text="Anecdote" text2="Vote" handleClick1={handleClickAnecdote} handleClick2={handleClickVote} 
+                  quote={selected} votes={`This quote has ${copy[selected]} vote(s).`} most={`The quote of ${mostPoints[0][0]} has the most votes at ${mostPoints[0][1]}`} />
           <div>
               <h2>Anecdote with most votes:</h2>
-              <p>{selected}</p>
-              <p>{mostPoints}</p>
+              <p>{`The quote of '${mostPoints[0][0]}' has the most votes at ${mostPoints[0][1]}`}</p>
+              
           </div>
         </div>
       )
@@ -212,7 +215,7 @@ const App = () => {
           <Button1 handleClick={handleClickNeutral} text='neutral' />
           <Button1 handleClick={handleClickBad} text='bad' />
           <Table good={good} neutral={neutral} bad={bad} total={total.length} average={average.toFixed(1)} positive={(positive.length / total.length).toFixed(1) * 100 + '%'} />
-          <Button2 text="Anecdote" text2="Vote" handleClick1={handleClickAnecdote} handleClick2={handleClickVote} quote={selected} votes={`This quote has ${copy[selected]} vote(s).`} most={mostPoints[0]}/>
+          <Button2 text="Anecdote" text2="Vote" handleClick1={handleClickAnecdote} handleClick2={handleClickVote} quote={selected} votes={`This quote has ${copy[selected]} vote(s).`} most={selected}/>
           <div>
               <h2>Anecdote with most votes:</h2>
               <p>{selected}</p>
