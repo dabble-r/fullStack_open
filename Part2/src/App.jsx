@@ -187,7 +187,7 @@ const App = () => {
          
           <div>
               <h2>Anecdote with most votes:</h2>
-              <p>{`The quote of '${mostPoints[0][0]}' has the most votes at ${mostPoints[0][1]}`}</p>
+              <p>{`The quote of  '${mostPoints[0][0]}'  has the most votes at ${mostPoints[0][1]}`}</p>
           </div>
         </div>
         
@@ -200,7 +200,7 @@ const App = () => {
           <Button1 handleClick={handleClickBad} text='bad' />
           <Table good={good} neutral={neutral} bad={bad} total={total.length} />
           <Button2 text="Anecdote" text2="Vote" handleClick1={handleClickAnecdote} handleClick2={handleClickVote} 
-                  quote={selected} votes={`This quote has ${copy[selected]} vote(s).`} most={`The quote of ${mostPoints[0][0]} has the most votes at ${mostPoints[0][1]}`} />
+                  quote={selected} votes={`This quote has ${copy[selected]} vote(s).`} most={`The quote of  '${mostPoints[0][0]}'  has the most votes at ${mostPoints[0][1]}`} />
           <div>
               <h2>Anecdote with most votes:</h2>
               <p>{`The quote of '${mostPoints[0][0]}' has the most votes at ${mostPoints[0][1]}`}</p>
@@ -215,11 +215,11 @@ const App = () => {
           <Button1 handleClick={handleClickNeutral} text='neutral' />
           <Button1 handleClick={handleClickBad} text='bad' />
           <Table good={good} neutral={neutral} bad={bad} total={total.length} average={average.toFixed(1)} positive={(positive.length / total.length).toFixed(1) * 100 + '%'} />
-          <Button2 text="Anecdote" text2="Vote" handleClick1={handleClickAnecdote} handleClick2={handleClickVote} quote={selected} votes={`This quote has ${copy[selected]} vote(s).`} most={selected}/>
+          <Button2 text="Anecdote" text2="Vote" handleClick1={handleClickAnecdote} handleClick2={handleClickVote} quote={selected} votes={`This quote has ${copy[selected]} vote(s).`} />
           <div>
               <h2>Anecdote with most votes:</h2>
-              <p>{selected}</p>
-              <p>{mostPoints}</p>
+              <p>{`The quote of '${mostPoints[0][0]}' has the most votes at ${mostPoints[0][1]}`}</p>
+              
           </div>
         </div>
       )
