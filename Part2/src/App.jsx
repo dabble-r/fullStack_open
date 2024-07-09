@@ -37,6 +37,7 @@ const App = () => {
 
   let name;
   let id;
+
   let len;
   let parts;
   let exercises;
@@ -50,7 +51,7 @@ const App = () => {
     if (key === 'parts') {
       len = course[key].length;
       parts = course[key].map(ele => {
-        return <li>part name: '{ele.name}' -- exercises: {ele.exercises}</li>
+        return <li key={ele.id}>part name: '{ele.name}' -- exercises: {ele.exercises}</li>
       })
     }
   }
