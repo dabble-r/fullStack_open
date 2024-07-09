@@ -6,7 +6,7 @@ const Course = (props) => {
             <h2>{props.course}</h2>
             <h3>{props.id} {props.length}</h3>
               <ul>
-                {props.parts}
+                {props.parts} {props.exercises}
               </ul>
         </div>
 }
@@ -34,10 +34,12 @@ const App = () => {
       }
     ]
   }
+
   let name;
   let id;
   let len;
   let parts;
+  let exercises;
   for (let key in course) {
     if (key === 'name') {
       name = course[key];
@@ -48,12 +50,12 @@ const App = () => {
     if (key === 'parts') {
       len = course[key].length;
       parts = course[key].map(ele => {
-        return <li>part name: '{ele.name}'</li>
+        return <li>part name: '{ele.name}' -- exercises: {ele.exercises}</li>
       })
     }
   }
 
-  return <Course course={name} id={`course id: #${id} -- course length: ${len} parts`} parts={parts} />
+  return <Course course={name} id={`course id: #${id} -- course length: ${len} parts`} parts={parts} exercises={exercises}/>
 }
 
 export default App
