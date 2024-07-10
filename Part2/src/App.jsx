@@ -8,6 +8,7 @@ const Course = (props) => {
               <ul>
                 {props.parts} {props.exercises}
               </ul>
+            <h4>Total of {props.total} exercises.</h4>
         </div>
 }
 
@@ -31,16 +32,22 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
 
   let name;
   let id;
-
   let len;
   let parts;
   let exercises;
+  let total;
+
   for (let key in course) {
     if (key === 'name') {
       name = course[key];
@@ -53,10 +60,15 @@ const App = () => {
       parts = course[key].map(ele => {
         return <li key={ele.id}>part name: '{ele.name}' -- exercises: {ele.exercises}</li>
       })
+      total = course[key].reduce((acc,curr) => {
+        acc += curr.exercises;
+        return acc;
+      },0);
     }
+
   }
 
-  return <Course course={name} id={`course id: #${id} -- course length: ${len} parts`} parts={parts} exercises={exercises}/>
+  return <Course course={name} id={`course id: #${id} -- course length: ${len} parts`} parts={parts} exercises={exercises} total={total}/>
 }
 
 export default App
