@@ -68,21 +68,22 @@ const App = () => {
           return acc;
       },0)
 
-      return <ul >
-              <li key={item['id']}>Part Name: {item['name']} -- Exercises: {item['exercises']}</li>
-            </ul>
+      return <li key={item['id']}>Part Name: {item['name']} -- Exercises: {item['exercises']}</li>
+           
     })
         
-    return <div>
-              <h2>{ele['name']}</h2>
-                {parts}
-              <span>Total exercises: {total}</span>
-           </div>
+      return <div>
+                <h2 key={ele['id']}>{ele['name']}</h2>
+                  <ul>
+                    {parts}
+                  </ul>
+                <span>Total exercises: {total}</span>
+             </div>
   })
 
   return <div>
-          {arrMap}
-        </div>
+            {arrMap}
+         </div>
   
   /*
   let name = [];
