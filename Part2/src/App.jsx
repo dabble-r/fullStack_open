@@ -72,13 +72,15 @@ const App = () => {
            
     })
         
-      return <div>
+      return <div key={ele['id']}>
                 <h2 key={ele['id']}>{ele['name']}</h2>
                   <ul>
                     {parts}
                   </ul>
                 <span>Total exercises: {total}</span>
              </div>
+             
+     
   })
 
   return <div>
