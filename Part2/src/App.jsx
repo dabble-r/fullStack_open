@@ -1,16 +1,5 @@
 
-
-const Course = (props) => {
-  
-  return <div>
-            <h2>{props.course}</h2>
-            <h3>{props.id} {props.length}</h3>
-              <ul>
-                {props.parts} {props.exercises}
-              </ul>
-            <h4>Total of {props.total} exercises.</h4>
-        </div>
-}
+import Course from './Course.jsx';
 
 
 const App = () => {
@@ -59,33 +48,29 @@ const App = () => {
     }
   ]
 
+  
   const arrMap = courses.map(ele => {
-   let total; 
-
+   let total;
     const parts = ele['parts'].map(item => {
       total = ele['parts'].reduce((acc,curr) => {
           acc += curr['exercises'];
           return acc;
       },0)
-
       return <li key={item['id']}>Part Name: {item['name']} -- Exercises: {item['exercises']}</li>
-           
     })
-        
       return <div key={ele['id']}>
-                <h2 key={ele['id']}>{ele['name']}</h2>
+                <Course name={ele['name']} />
                   <ul>
                     {parts}
                   </ul>
-                <span>Total exercises: {total}</span>
+                <Course text='Total Exercises: ' total={total} />
              </div>
-             
-     
-  })
+   })
 
-  return <div>
-            {arrMap}
-         </div>
+
+    return <div>
+              {arrMap}
+           </div>
   
   /*
   let name = [];
