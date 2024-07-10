@@ -60,31 +60,25 @@ const App = () => {
   ]
 
   const arrMap = courses.map(ele => {
-    let name;
-    let exercises;
-    let id;
-    
+   let total; 
 
     const parts = ele['parts'].map(item => {
-      return <ul>
-              <li key={item['id']}>Part: {item['name']} {item['exercises']}</li>
+      total = ele['parts'].reduce((acc,curr) => {
+          acc += curr['exercises'];
+          return acc;
+      },0)
+
+      return <ul >
+              <li key={item['id']}>Part Name: {item['name']} -- Exercises: {item['exercises']}</li>
             </ul>
     })
-         
         
-      
-
-    
-
-    return <div key={ele['id']}>
+    return <div>
               <h2>{ele['name']}</h2>
-              <span>Number of Parts: {ele['parts'].length}</span>
-              <p>Parts</p>
                 {parts}
+              <span>Total exercises: {total}</span>
            </div>
   })
-  
-
 
   return <div>
           {arrMap}
