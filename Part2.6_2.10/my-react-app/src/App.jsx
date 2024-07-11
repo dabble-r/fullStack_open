@@ -8,7 +8,14 @@ function App() {
   const [newName, setName] = useState('')
 
   const handleNewName = (event) => {
-    setName(event.target.value);
+    for (let i = 0; i < persons.length; i++) {
+      if (persons[i].name === event.target.value) {
+        window.alert(`${event.target.value} is already added ot the phonebook.`)
+        setName('enter name here')
+      } else {
+        setName(event.target.value);
+      }
+    }
   } 
 
   const addName = (event) => {
