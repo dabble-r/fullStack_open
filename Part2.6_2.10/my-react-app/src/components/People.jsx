@@ -3,7 +3,11 @@
 
 const People = (props) => {
 
-  return <li> {props.name} {props.number}</li>
+  return <div>
+            <ul>
+              {props.showAll.map(ele=><li key={ele.id}>{ele.name} -- {ele.number}</li>)}
+            </ul>
+        </div>
            
         
        

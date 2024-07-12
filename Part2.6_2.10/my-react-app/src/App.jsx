@@ -16,9 +16,7 @@ function App() {
   const [newNumber, setNumber] = useState('');
   const [filterName, setFilter] = useState('')
   const [foundName, setFoundName] = useState({})
-  const [showAll, setShowAll] = useState()
-
-
+  
   const handleSubmitPerson = (event) => {
     event.preventDefault();
     if (!newNumber || !newName) {
@@ -72,6 +70,8 @@ function App() {
     }
 
   const random = persons[Math.floor(Math.random() * persons.length)];
+
+  
     
   return <div>
              <h2>Phonebook</h2>  
@@ -88,11 +88,11 @@ function App() {
                 <Person key={random.id} name={random.name} number={random.number}/>
 
                 All:
-                <ul>
-                {persons.map(ele => 
-                    <People key={ele.id} name={ele.name} number={ele.number} /> 
-                  )}
-                </ul>
+               
+                
+                    <People showAll={persons} /> 
+                  
+                
                   
                    
               
