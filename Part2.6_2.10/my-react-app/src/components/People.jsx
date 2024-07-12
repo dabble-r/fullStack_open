@@ -3,9 +3,10 @@
 
 const People = (props) => {
 
-  return <div>
-          <li>{props.name} {props.number}</li>
-        </div>
+  return <li> {props.name} {props.number}</li>
+           
+        
+       
         
   
   

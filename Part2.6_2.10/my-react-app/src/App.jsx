@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Person from './components/Person'
 import Filter from './components/Filter'
 import People from './components/People'
+import Form from './components/Form'
 
 
 
@@ -12,28 +13,33 @@ function App() {
     {name: '', number: null, id: 0}
   ]);
   const [newName, setName] = useState('');
-  const [newNumber, setNumber] = useState(`___-___-___`);
+  const [newNumber, setNumber] = useState('');
   const [filterName, setFilter] = useState('')
   const [foundName, setFoundName] = useState({})
+  const [showAll, setShowAll] = useState()
 
 
   const handleSubmitPerson = (event) => {
     event.preventDefault();
-    const personObj = {
-      name: newName,
-      number: newNumber,
-      id: persons.length
+    if (!newNumber || !newName) {
+      window.alert('please enter name and number')
+    } else {
+      const personObj = {
+        name: newName,
+        number: newNumber,
+        id: persons.length
+      }
+          setPersons(persons.concat(personObj))
+          setName('')
+          setNumber('')
     }
-        setPersons(persons.concat(personObj))
-        setName('enter name here')
-        setNumber('___-___-___')
   }
 
     const handleNewName = (event) => {
       for (let i = 0; i < persons.length; i++) {
         if (persons[i].name === event.target.value) {
           window.alert(`${event.target.value} is already added ot the phonebook.`)
-          setName('enter name here')
+          setName('')
         } else {
           setName(event.target.value);
         }
@@ -42,7 +48,7 @@ function App() {
 
     const handleNewNumber = (event) => {
       event.preventDefault();
-      setNumber(parseInt(event.target.value))
+      setNumber(event.target.value)
     }
     
     const handleFilterName = (event) => {
@@ -51,12 +57,16 @@ function App() {
     }
 
     const handleSubmitFilter = (event) => {
-     
+     let flag = false;
         event.preventDefault();
         for (let i = 0; i < persons.length; i++) {
           if (persons[i].name == filterName) {
+            flag = true;
             setFoundName({name: filterName, number: persons[i].number});
           } 
+        }
+        if (!flag) {
+          window.alert('no such name')
         }
         setFilter('');
     }
@@ -65,6 +75,7 @@ function App() {
     
   return <div>
              <h2>Phonebook</h2>  
+
              <form onSubmit={handleSubmitFilter}>
                   <h3>Filter Names</h3>
                   <div>
@@ -78,31 +89,27 @@ function App() {
                       <li>{ foundName ? foundName.name : 'no such name' } -- { foundName ? foundName.number : 'no such name' }</li>
                     </ul>
                   </div>
-              </form>        
-              <form onSubmit={handleSubmitPerson}>
-                  <h3>Add a New:</h3>
-                  <div>
-                    name: <input value={newName} onChange={handleNewName}/>
-                  </div>
-                  <div> 
-                    number: <input value={newNumber} onChange={handleNewNumber}/>
-                  </div>
-                  <div>
-                    <button type='submit'>add</button>
-                  </div>
-              </form>
+              </form>  
+
+             
+              <Form funcNew={handleSubmitPerson} varName={newName} handleName={handleNewName} varNum={newNumber} handleNum={handleNewNumber}/>
+
              <h2>Numbers</h2>
+
                 Random:
                 <Person key={random.id} name={random.name} number={random.number}/>
+
                 All:
-               {persons.map(ele => 
-               <ul>
-                  <People key={ele.id} name={ele.name} number={ele.number}/>
-               </ul>
-                
-                )}
-             
-         </div>
+                <ul>
+                {persons.map(ele => 
+                    <People key={ele.id} name={ele.name} number={ele.number} /> 
+                  )}
+                </ul>
+                  
+                   
+              
+    
+        </div>
   }
 
 
