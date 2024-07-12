@@ -8,6 +8,7 @@ const Form = (props) => {
                   <div>
                     name: <input value={props.varName} onChange={props.handleName}/>
                   </div>
+                  <span><br></br></span>
                   <div> 
                     number: <input value={props.varNum} onChange={props.handleNum}/>
                   </div>

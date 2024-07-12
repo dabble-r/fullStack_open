@@ -4,26 +4,30 @@ import Filter from './components/Filter'
 import People from './components/People'
 import Form from './components/Form'
 import axios from 'axios'
+import noteService from './services/notes'
+
 
 function App() {
-  const [persons, setPersons] = useState([
-    {name: '', number: null, id: 0}
-  ]);
+  const [persons, setPersons] = useState([{name:null,number:null,id:null}]);
   const [newName, setName] = useState('');
   const [newNumber, setNumber] = useState('');
   const [filterName, setFilter] = useState('')
   const [foundName, setFoundName] = useState({})
   
-//inital state fetch axios
+// inital state fetch axios
+// numbers saved to backend server
 useEffect(() => {
-  console.log('effect')
   axios
-    .get('http://localhost:3001/persons')
+    .get('http://localhost:3001/persons/')
     .then(response => {
-      console.log('promise fulfilled')
       setPersons(response.data)
     })
 }, [])
+
+//noteService.getAll()
+//noteService.create({})
+//noteService.update()
+//noteService.remove()
 
 
 
@@ -35,7 +39,7 @@ useEffect(() => {
       const personObj = {
         name: newName,
         number: newNumber,
-        id: persons.length
+        id: (persons.length + 1).toString()
       }
           setPersons(persons.concat(personObj))
           setName('')
@@ -92,7 +96,7 @@ useEffect(() => {
 
                 Random:
                 <Person key={random.id} name={random.name} number={random.number} />
-
+               
                 All:
                 <People showAll={persons} /> 
 
