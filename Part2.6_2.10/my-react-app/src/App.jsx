@@ -58,9 +58,9 @@ function App() {
      let flag = false;
         event.preventDefault();
         for (let i = 0; i < persons.length; i++) {
-          if (persons[i].name == filterName) {
+          if (persons[i].name.toLowerCase() == filterName.toLowerCase()) {
             flag = true;
-            setFoundName({name: filterName, number: persons[i].number});
+            setFoundName({name: persons[i].name, number: persons[i].number});
           } 
         }
         if (!flag) {
@@ -71,33 +71,22 @@ function App() {
 
   const random = persons[Math.floor(Math.random() * persons.length)];
 
-  
-    
   return <div>
              <h2>Phonebook</h2>  
 
-
-             
-
-              <Filter submitFilter={handleSubmitFilter} name={filterName} handleFilter={handleFilterName} found={foundName} returnName={foundName.name} returnNum={foundName.number}/>
-              <Form funcNew={handleSubmitPerson} varName={newName} handleName={handleNewName} varNum={newNumber} handleNum={handleNewNumber}/>
+              <Filter submitFilter={handleSubmitFilter} name={filterName} handleFilter={handleFilterName} found={foundName} returnName={foundName.name} returnNum={foundName.number} />
+              
+              <Form funcNew={handleSubmitPerson} varName={newName} handleName={handleNewName} varNum={newNumber} handleNum={handleNewNumber} />
 
              <h2>Numbers</h2>
 
                 Random:
-                <Person key={random.id} name={random.name} number={random.number}/>
+                <Person key={random.id} name={random.name} number={random.number} />
 
                 All:
-               
-                
-                    <People showAll={persons} /> 
-                  
-                
-                  
-                   
-              
-    
-        </div>
+                <People showAll={persons} /> 
+
+           </div>
   }
 
 
