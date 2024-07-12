@@ -1,12 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Person from './components/Person'
 import Filter from './components/Filter'
 import People from './components/People'
 import Form from './components/Form'
-
-
-
-
+import axios from 'axios'
 
 function App() {
   const [persons, setPersons] = useState([
@@ -17,6 +14,19 @@ function App() {
   const [filterName, setFilter] = useState('')
   const [foundName, setFoundName] = useState({})
   
+//inital state fetch axios
+useEffect(() => {
+  console.log('effect')
+  axios
+    .get('http://localhost:3001/persons')
+    .then(response => {
+      console.log('promise fulfilled')
+      setPersons(response.data)
+    })
+}, [])
+
+
+
   const handleSubmitPerson = (event) => {
     event.preventDefault();
     if (!newNumber || !newName) {
