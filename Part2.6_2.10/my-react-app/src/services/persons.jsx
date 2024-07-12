@@ -10,12 +10,14 @@ const getAll = () => {
 
 const create = newObject => {
   //console.log(axios.post(baseURL, newObject))
-  return axios.post(baseURL, newObject)
+  const request =  axios.post(baseURL, newObject);
+  return request.then(response => response.data)
 }
 
 const update = (id, newObject) => {
   //console.log(axios.put(`${baseURL}/${id}`, newObject))
-  return axios.put(`${baseURL}/${id}`, newObject)
+  const request = axios.put(`${baseURL}/${id}`, newObject)
+  return request.then(response => response.data)
 }
 
 const remove = (name) => {

@@ -4,7 +4,7 @@ import Filter from './components/Filter'
 import People from './components/People'
 import Form from './components/Form'
 import axios from 'axios'
-import noteService from './services/notes'
+import personService from './services/persons'
 
 
 function App() {
@@ -24,10 +24,22 @@ useEffect(() => {
     })
 }, [])
 
-//noteService.getAll()
-//noteService.create({})
-//noteService.update()
-//noteService.remove()
+//personService.getAll()
+/*
+personService
+.create(personObj)
+.then(returnPerson => {
+  setPersons(persons.concat(returnPerson))
+})
+*/
+/*
+personService
+      .update(id, changedPerson)
+      .then(returnPerson => {
+        setPersons(persons.map(person => person.id !== id ? person : returnPerson))
+      })
+  */
+//personService.remove()
 
 
 
@@ -41,7 +53,11 @@ useEffect(() => {
         number: newNumber,
         id: (persons.length + 1).toString()
       }
-          setPersons(persons.concat(personObj))
+      personService
+      .create(personObj)
+      .then(returnPerson => {
+        setPersons(persons.concat(returnPerson))
+      })
           setName('')
           setNumber('')
     }
