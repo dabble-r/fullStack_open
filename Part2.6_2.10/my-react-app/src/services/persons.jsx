@@ -3,8 +3,8 @@ import axios from 'axios'
 const baseURL = 'http://localhost:3001/persons'
 
 const getAll = () => {
-  console.log(axios.get(baseURL))
-  return axios.get(baseURL)
+    const request = axios.get(baseURL)
+    return request.then(response => response.data)
 }
 
 
@@ -20,11 +20,10 @@ const update = (id, newObject) => {
   return request.then(response => response.data)
 }
 
-const remove = (name) => {
-  return axios.put(baseURL)
-    .then(response => {
-      setPersons(persons.filter(person => person.name !== name ? person : response.data))
-    })
+const remove = (id) => {
+  const request = axios.delete(`${baseURL}/${id}`);
+    // DELETE request using axios inside useEffect React hook
+   return request.then(response => response.data)
 }
 
 

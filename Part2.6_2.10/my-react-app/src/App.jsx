@@ -3,6 +3,8 @@ import Person from './components/Person'
 import Filter from './components/Filter'
 import People from './components/People'
 import Form from './components/Form'
+import Button from './components/Button'
+import Input from './components/Input'
 import axios from 'axios'
 import personService from './services/persons'
 
@@ -13,7 +15,8 @@ function App() {
   const [newNumber, setNumber] = useState('');
   const [filterName, setFilter] = useState('')
   const [foundName, setFoundName] = useState({})
-  
+  const baseURL = 'http://localhost:3001/persons/';
+
 // inital state fetch axios
 // numbers saved to backend server
 useEffect(() => {
@@ -24,34 +27,24 @@ useEffect(() => {
     })
 }, [])
 
-//personService.getAll()
-/*
-personService
-.create(personObj)
-.then(returnPerson => {
-  setPersons(persons.concat(returnPerson))
-})
-*/
-/*
-personService
-      .update(id, changedPerson)
-      .then(returnPerson => {
-        setPersons(persons.map(person => person.id !== id ? person : returnPerson))
-      })
-  */
-//personService.remove()
 
+const handleRemovePerson = (event) => {
+  const id = event.target.id;
+  personService
+  .remove(id);
+}
 
 
   const handleSubmitPerson = (event) => {
     event.preventDefault();
+  
     if (!newNumber || !newName) {
       window.alert('please enter name and number')
     } else {
       const personObj = {
         name: newName,
         number: newNumber,
-        id: (persons.length + 1).toString()
+        id: (Math.floor((Math.random() * 1000))).toString()
       }
       personService
       .create(personObj)
@@ -114,8 +107,11 @@ personService
                 <Person key={random.id} name={random.name} number={random.number} />
                
                 All:
-                <People showAll={persons} /> 
+                <People showAll={persons} removeFunc={handleRemovePerson}/>
 
+               
+               
+                
            </div>
   }
 
