@@ -76,22 +76,10 @@ function App() {
   return <div>
              <h2>Phonebook</h2>  
 
-             <form onSubmit={handleSubmitFilter}>
-                  <h3>Filter Names</h3>
-                  <div>
-                    <input value={filterName} onChange={handleFilterName} />
-                  </div>
-                  <div>
-                    <button type='submit'>filter</button>
-                  </div>
-                  <div>
-                    <ul> 
-                      <li>{ foundName ? foundName.name : 'no such name' } -- { foundName ? foundName.number : 'no such name' }</li>
-                    </ul>
-                  </div>
-              </form>  
 
              
+
+              <Filter submitFilter={handleSubmitFilter} name={filterName} handleFilter={handleFilterName} found={foundName} returnName={foundName.name} returnNum={foundName.number}/>
               <Form funcNew={handleSubmitPerson} varName={newName} handleName={handleNewName} varNum={newNumber} handleNum={handleNewNumber}/>
 
              <h2>Numbers</h2>

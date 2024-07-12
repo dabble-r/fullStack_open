@@ -15,8 +15,6 @@ const Form = (props) => {
                     <button type='submit'>add</button>
                   </div>
       </form>
-      
-      
     </div>
   );
 }
