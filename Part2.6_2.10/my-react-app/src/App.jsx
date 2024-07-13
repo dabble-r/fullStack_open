@@ -36,9 +36,6 @@ const handleRemovePerson = (event) => {
       personService
       .remove(id)
     }
-    
-  
-
 }
 
 const handleUpdatePerson = () => {
@@ -47,35 +44,48 @@ const handleUpdatePerson = () => {
 
   const handleSubmitPerson = (event) => {
     event.preventDefault();
-  
+    let flag = false;
     if (!newNumber || !newName) {
       window.alert('please enter name and number')
-    } else {
-      const personObj = {
-        name: newName,
-        number: newNumber,
-        id: (Math.floor((Math.random() * 1000))).toString()
-      }
-      personService
-      .create(personObj)
-      .then(returnPerson => {
-        setPersons(persons.concat(returnPerson))
-      })
-          setName('')
-          setNumber('')
-    }
-  }
-
-    const handleNewName = (event) => {
+    } 
+    if (newNumber && newName) {
       for (let i = 0; i < persons.length; i++) {
-        if (persons[i].name === event.target.value) {
-          window.alert(`${event.target.value} is already added ot the phonebook.`)
-          setName('')
-        } else {
-          setName(event.target.value);
+        if (persons[i].name == newName) {
+          flag = true;
+          if (window.confirm(`Do you want to update the number for ${newName}?`)) {
+              persons[i].number = newNumber;
+            } else {
+              setName('');
+              setNumber('');
+            }
+          }
+      }
+        if (!flag) {
+            const personObj = {
+              name: newName,
+              number: newNumber,
+              id: (Math.floor((Math.random() * (persons.length * 10)))).toString()
+            }
+            personService
+            .create(personObj)
+            .then(returnPerson => {
+                setPersons(persons.concat(returnPerson))
+            }) 
         }
       }
-    } 
+    
+        setName('')
+        setNumber('')
+  }
+      
+         
+  
+
+    const handleNewName = (event) => {
+      event.preventDefault();
+     setName(event.target.value);
+    }
+      
 
     const handleNewNumber = (event) => {
       event.preventDefault();
