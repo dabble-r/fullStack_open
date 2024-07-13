@@ -6,24 +6,27 @@ const Filter = (props) => {
     borderRadius: 5,
     padding: 10,
     margin: 5,
-    color: "red"
+    color: "black"
   }
 
   return (
-    <div>
-        <form onSubmit={props.submitFilter}>
+    <div >
+        <form onSubmit={props.submitFilter} >
                   <h3>Filtered Name</h3>
-                  <div>
-                    <input value={props.name} onChange={props.handleFilter} />
+                  <div style={filterStyle}>
+                    <div>
+                      <input value={props.name} onChange={props.handleFilter} />
+                    </div>
+                    <div>
+                      <button type='submit'>filter</button>
+                    </div>
+                    <div>
+                      <ul> 
+                        <li className='filter' >{ props.found ? props.returnName : 'no such name' } -- { props.found ? props.returnNum : 'no such name' }</li>
+                      </ul>
+                    </div>
                   </div>
-                  <div>
-                    <button type='submit'>filter</button>
-                  </div>
-                  <div>
-                    <ul> 
-                      <li className='filter' style={filterStyle}>{ props.found ? props.returnName : 'no such name' } -- { props.found ? props.returnNum : 'no such name' }</li>
-                    </ul>
-                  </div>
+                  
               </form> 
     </div>
   )}

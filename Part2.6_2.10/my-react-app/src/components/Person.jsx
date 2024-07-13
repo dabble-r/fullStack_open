@@ -1,13 +1,26 @@
 
 
 const Person = (props) => {
- 
-  return <div>
+ const randomStyle = {
+    background: 'lightgrey',
+    borderStyle: 'solid',
+    borderRadius: 5,
+    padding: 10,
+    margin: 5,
+    color: "black"
+  }
+  
+
+  return (<div style={randomStyle}>
             <ul>
-              <li className='random'> {props.name} {props.number} </li>
+              <li> {props.randName} -- {props.randNumber} </li>
             </ul>
-        </div>
-        
+            <div>
+              <form onSubmit={props.funcRandom}>
+                <button type='submit'>Explore</button>
+              </form>
+            </div>
+        </div>)
 }
 
 

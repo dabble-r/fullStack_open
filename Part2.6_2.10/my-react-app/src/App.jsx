@@ -17,18 +17,23 @@ function App() {
   const [filterName, setFilter] = useState('')
   const [foundName, setFoundName] = useState({})
   const [errorMessage, setErrorMessage] = useState(null)
+  const [random, setRandom] = useState(null)
+  const [randName, setRandName] = useState('')
+  const [randNumber, setRandNumber] = useState(null)
   const baseURL = 'http://localhost:3001/persons/';
 
 // inital state fetch axios
 // numbers saved to backend server
 
 useEffect(() => {
-  axios
+  if (persons) {
+    axios
     .get('http://localhost:3001/persons/')
     .then(response => {
       setPersons(response.data)
     })
-}, [])
+  }
+}, [persons])
 
 
 
@@ -135,12 +140,18 @@ const handleRemovePerson = (event) => {
             },5000)
           }
         }
-        
         setFilter('');
     }
 
-  const random = !persons.length ? 0 : persons[Math.floor(Math.random() * persons.length)];
-
+  
+  const handleRandom = (event) => {
+    event.preventDefault();
+    const randVal = !persons.length ? 0 : Math.floor(Math.random() * persons.length);
+    setRandom(randVal)
+    setRandName(persons[randVal]['name'])
+    setRandNumber(persons[randVal]['number'])
+    
+  }
   return <div>
              <h2>Phonebook</h2>  
 
@@ -148,12 +159,13 @@ const handleRemovePerson = (event) => {
 
               <Filter submitFilter={handleSubmitFilter} name={filterName} handleFilter={handleFilterName} found={foundName} returnName={foundName.name} returnNum={foundName.number} />
               
-              <Form funcNew={handleSubmitPerson} varName={newName} handleName={handleNewName} varNum={newNumber} handleNum={handleNewNumber} />
+              <Form funcNew={handleSubmitPerson}  varName={newName} handleName={handleNewName} varNum={newNumber} handleNum={handleNewNumber} />
 
              <h2>Numbers</h2>
 
              Random:
-             <Person key={random.id} name={random.name} number={random.number}  />
+             <Person funcRandom={handleRandom} randName={randName} randNumber={randNumber} />
+             <span><br></br></span>
 
                 All:
                 <People showAll={persons} removeFunc={handleRemovePerson}/>
@@ -169,7 +181,3 @@ const handleRemovePerson = (event) => {
 
 export default App
 
-/*
-
-                
-                */
