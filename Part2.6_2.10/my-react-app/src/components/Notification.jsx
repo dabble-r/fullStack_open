@@ -1,6 +1,7 @@
 
 
 const Notification = (props) => {
+
   const notificationStyle = {
     color: 'red',
     background: 'lightgrey',
@@ -9,7 +10,8 @@ const Notification = (props) => {
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
-    }
+  }
+
 
   return <div style={notificationStyle}>
             <p>{props.message}</p>

@@ -1,6 +1,13 @@
 
 const Filter = (props) => {
-  
+  const filterStyle = {
+    background: 'lightgrey',
+    borderStyle: 'solid',
+    borderRadius: 5,
+    padding: 10,
+    margin: 5,
+    color: "red"
+  }
 
   return (
     <div>
@@ -14,7 +21,7 @@ const Filter = (props) => {
                   </div>
                   <div>
                     <ul> 
-                      <li className='filter'>{ props.found ? props.returnName : 'no such name' } -- { props.found ? props.returnNum : 'no such name' }</li>
+                      <li className='filter' style={filterStyle}>{ props.found ? props.returnName : 'no such name' } -- { props.found ? props.returnNum : 'no such name' }</li>
                     </ul>
                   </div>
               </form> 

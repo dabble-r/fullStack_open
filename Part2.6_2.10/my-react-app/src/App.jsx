@@ -86,7 +86,7 @@ const handleRemovePerson = (event) => {
           const personObj = {
             name: newName,
             number: newNumber,
-            id: (Math.floor((Math.random() * (persons.length * 10)))).toString()
+            id: (persons.length + 1).toString()
           }
           personService
             .create(personObj)
