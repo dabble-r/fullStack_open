@@ -67,7 +67,11 @@ const handleRemovePerson = (event) => {
           if (window.confirm(`Do you want to update the number for ${newName}?`)) {
              // persons[i].number = newNumber;
              personService 
-              .update(id, {...persons[i],number:newNumber});
+              .update(id, {...persons[i],number:newNumber})
+              .catch(error => {
+                setErrorMessage(`${persons[i].name} not found.`)
+                setPersons(persons.filter(ele => ele.id !== id))
+              })
               setErrorMessage(`${persons[i].name} updated`)
               setTimeout(() => {
                 setErrorMessage(null)
