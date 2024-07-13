@@ -40,7 +40,7 @@ const handleRemovePerson = (event) => {
     if (window.confirm(`Are you sure you want to delete ${name}?`)) {
       personService
       .remove(id) 
-      setErrorMessage('person deleted')
+      setErrorMessage(`${name} deleted`)
       setTimeout(() => {
         setErrorMessage(null)
       },2500)
@@ -68,7 +68,7 @@ const handleRemovePerson = (event) => {
              // persons[i].number = newNumber;
              personService 
               .update(id, {...persons[i],number:newNumber});
-              setErrorMessage('person updated')
+              setErrorMessage(`${persons[i].name} updated`)
               setTimeout(() => {
                 setErrorMessage(null)
               },2500)
