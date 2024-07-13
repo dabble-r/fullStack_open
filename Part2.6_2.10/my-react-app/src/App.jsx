@@ -30,10 +30,20 @@ useEffect(() => {
 
 const handleRemovePerson = (event) => {
   const id = event.target.id;
-  personService
-  .remove(id);
+  const name = event.target.name;
+ 
+    if (window.confirm(`Are you sure you want to delete ${name}?`)) {
+      personService
+      .remove(id)
+    }
+    
+  
+
 }
 
+const handleUpdatePerson = () => {
+
+}
 
   const handleSubmitPerson = (event) => {
     event.preventDefault();
