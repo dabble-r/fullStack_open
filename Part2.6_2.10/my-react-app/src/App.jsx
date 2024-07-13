@@ -5,6 +5,7 @@ import People from './components/People'
 import Form from './components/Form'
 import Button from './components/Button'
 import Input from './components/Input'
+import Notification from './components/Notification'
 import axios from 'axios'
 import personService from './services/persons'
 
@@ -15,10 +16,12 @@ function App() {
   const [newNumber, setNumber] = useState('');
   const [filterName, setFilter] = useState('')
   const [foundName, setFoundName] = useState({})
+  const [errorMessage, setErrorMessage] = useState(null)
   const baseURL = 'http://localhost:3001/persons/';
 
 // inital state fetch axios
 // numbers saved to backend server
+
 useEffect(() => {
   axios
     .get('http://localhost:3001/persons/')
@@ -28,6 +31,8 @@ useEffect(() => {
 }, [])
 
 
+
+
 const handleRemovePerson = (event) => {
   const id = event.target.id;
   const name = event.target.name;
@@ -35,19 +40,24 @@ const handleRemovePerson = (event) => {
     if (window.confirm(`Are you sure you want to delete ${name}?`)) {
       personService
       .remove(id) 
+      setErrorMessage('person deleted')
+      setTimeout(() => {
+        setErrorMessage(null)
+      },2500)
     }
 }
 
-const handleUpdatePerson = () => {
 
-}
 
   const handleSubmitPerson = (event) => {
     event.preventDefault();
     let id;
     let flag = false;
     if (!newNumber || !newName) {
-      window.alert('please enter name and number')
+      setErrorMessage('please enter name and number')
+      setTimeout(() => {
+          setErrorMessage(null)
+      },5000)
     } 
     if (newNumber && newName) {
       for (let i = 0; i < persons.length; i++) {
@@ -56,11 +66,12 @@ const handleUpdatePerson = () => {
           id = persons[i].id;
           if (window.confirm(`Do you want to update the number for ${newName}?`)) {
              // persons[i].number = newNumber;
-              
              personService 
               .update(id, {...persons[i],number:newNumber});
-              
-              
+              setErrorMessage('person updated')
+              setTimeout(() => {
+                setErrorMessage(null)
+              },2500)
             } else {
               setName('');
               setNumber('');
@@ -111,7 +122,10 @@ const handleUpdatePerson = () => {
           } 
         }
         if (!flag) {
-          window.alert('no such name')
+          setErrorMessage('no such name found')
+          setTimeout(() => {
+            setErrorMessage(null)
+          },5000)
         }
         setFilter('');
     }
@@ -120,6 +134,8 @@ const handleUpdatePerson = () => {
 
   return <div>
              <h2>Phonebook</h2>  
+
+              <Notification message={errorMessage}/>
 
               <Filter submitFilter={handleSubmitFilter} name={filterName} handleFilter={handleFilterName} found={foundName} returnName={foundName.name} returnNum={foundName.number} />
               

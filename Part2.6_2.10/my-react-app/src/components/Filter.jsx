@@ -14,7 +14,7 @@ const Filter = (props) => {
                   </div>
                   <div>
                     <ul> 
-                      <li>{ props.found ? props.returnName : 'no such name' } -- { props.found ? props.returnNum : 'no such name' }</li>
+                      <li className='filter'>{ props.found ? props.returnName : 'no such name' } -- { props.found ? props.returnNum : 'no such name' }</li>
                     </ul>
                   </div>
               </form> 
