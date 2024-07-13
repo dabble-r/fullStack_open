@@ -11,7 +11,7 @@ import personService from './services/persons'
 
 
 function App() {
-  const [persons, setPersons] = useState([{name:null,number:null,id:null}]);
+  const [persons, setPersons] = useState([]);
   const [newName, setName] = useState('');
   const [newNumber, setNumber] = useState('');
   const [filterName, setFilter] = useState('')
@@ -68,7 +68,7 @@ const handleRemovePerson = (event) => {
              // persons[i].number = newNumber;
              personService 
               .update(id, {...persons[i],number:newNumber})
-              .catch(error => {
+              .catch(() => {
                 setErrorMessage(`${persons[i].name} not found.`)
                 setPersons(persons.filter(ele => ele.id !== id))
               })
@@ -119,22 +119,27 @@ const handleRemovePerson = (event) => {
     const handleSubmitFilter = (event) => {
      let flag = false;
         event.preventDefault();
-        for (let i = 0; i < persons.length; i++) {
-          if (persons[i].name.toLowerCase() == filterName.toLowerCase()) {
-            flag = true;
-            setFoundName({name: persons[i].name, number: persons[i].number});
-          } 
+        if (!persons.length) {
+          setErrorMessage('No person in phonebook')
+        } else {
+          for (let i = 0; i < persons.length; i++) {
+            if (persons[i].name.toLowerCase() == filterName.toLowerCase()) {
+              flag = true;
+              setFoundName({name: persons[i].name, number: persons[i].number});
+            } 
+          }
+          if (!flag) {
+            setErrorMessage('no such name found')
+            setTimeout(() => {
+              setErrorMessage(null)
+            },5000)
+          }
         }
-        if (!flag) {
-          setErrorMessage('no such name found')
-          setTimeout(() => {
-            setErrorMessage(null)
-          },5000)
-        }
+        
         setFilter('');
     }
 
-  const random = persons[Math.floor(Math.random() * persons.length)];
+  const random = !persons.length ? 0 : persons[Math.floor(Math.random() * persons.length)];
 
   return <div>
              <h2>Phonebook</h2>  
@@ -147,9 +152,9 @@ const handleRemovePerson = (event) => {
 
              <h2>Numbers</h2>
 
-                Random:
-                <Person key={random.id} name={random.name} number={random.number} />
-               
+             Random:
+             <Person key={random.id} name={random.name} number={random.number}  />
+
                 All:
                 <People showAll={persons} removeFunc={handleRemovePerson}/>
 
@@ -164,3 +169,7 @@ const handleRemovePerson = (event) => {
 
 export default App
 
+/*
+
+                
+                */
