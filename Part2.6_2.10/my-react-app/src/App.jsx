@@ -34,7 +34,7 @@ const handleRemovePerson = (event) => {
  
     if (window.confirm(`Are you sure you want to delete ${name}?`)) {
       personService
-      .remove(id)
+      .remove(id) 
     }
 }
 
@@ -44,42 +44,46 @@ const handleUpdatePerson = () => {
 
   const handleSubmitPerson = (event) => {
     event.preventDefault();
+    let id;
     let flag = false;
     if (!newNumber || !newName) {
       window.alert('please enter name and number')
     } 
     if (newNumber && newName) {
       for (let i = 0; i < persons.length; i++) {
-        if (persons[i].name == newName) {
+        if (persons[i].name.toLowerCase() == newName.toLowerCase()) {
           flag = true;
+          id = persons[i].id;
           if (window.confirm(`Do you want to update the number for ${newName}?`)) {
-              persons[i].number = newNumber;
+             // persons[i].number = newNumber;
+              
+             personService 
+              .update(id, {...persons[i],number:newNumber});
+              
+              
             } else {
               setName('');
               setNumber('');
             }
           }
       }
-        if (!flag) {
-            const personObj = {
-              name: newName,
-              number: newNumber,
-              id: (Math.floor((Math.random() * (persons.length * 10)))).toString()
-            }
-            personService
+      if (!flag) {
+          const personObj = {
+            name: newName,
+            number: newNumber,
+            id: (Math.floor((Math.random() * (persons.length * 10)))).toString()
+          }
+          personService
             .create(personObj)
             .then(returnPerson => {
                 setPersons(persons.concat(returnPerson))
-            }) 
+          }) 
         }
       }
-    
-        setName('')
-        setNumber('')
+      setName('');
+      setNumber('');
   }
       
-         
-  
 
     const handleNewName = (event) => {
       event.preventDefault();
