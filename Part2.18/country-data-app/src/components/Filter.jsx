@@ -5,7 +5,7 @@ const Filter = (props) => {
   return (
     <>
       <form onSubmit={props.funcSearch}>
-        <button type='submit'>search</button>
+        <button type='submit'>Search</button>
       </form>
     </>
   )
