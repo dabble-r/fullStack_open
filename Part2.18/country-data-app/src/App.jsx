@@ -4,6 +4,7 @@ import Filter from './components/Filter'
 import Details from './components/Details'
 import Reset from './components/Reset'
 import Notification from './components/Notification'
+import Flag from './components/Flag'
 import axios from 'axios'
 import './App.css'
 
@@ -17,6 +18,7 @@ function App() {
   const [capital, setCapital] = useState('');
   const [area, setArea] = useState('');
   const [languages, setLanguages] = useState([]);
+  const [flag, setFlag] = useState(null);
  
 
 
@@ -50,22 +52,36 @@ function App() {
     } 
     if (namesFiltered.length === 1) {
       //setNamesFiltered([]);
-      let langObj = namesFiltered[0]['languages'];
-      
+      handleLangs();
+      handleFlags();
       setNameTitle(namesFiltered[0]['name']['common']);
       setCapital(namesFiltered[0]['capital']);
       setArea(namesFiltered[0]['area']);
-        for (let key in langObj) {
-          let temp = {};
-          temp['id'] = key;
-          temp['language'] = langObj[key];
-          languages.push(temp);
-        }
-        
-      setLanguages(languages);
-      console.log(languages);
     } 
   }
+
+  //helper
+  const handleLangs = () => {
+    let langObj = namesFiltered[0]['languages'];
+    for (let key in langObj) {
+      let temp = {};
+      temp['id'] = key;
+      temp['language'] = langObj[key];
+      languages.push(temp);
+    }
+  setLanguages(languages);
+  }
+
+  //helper
+  const handleFlags = () => {
+    let flagObj = namesFiltered[0]['flags'];
+    for (let key in flagObj) {
+      if (key === 'png') {
+        setFlag(flagObj[key]);
+      }
+    }
+  }
+
 
   const reset = () =>{
     setCountry('');
@@ -88,6 +104,7 @@ function App() {
         <Reset funcReset={reset} />
         <h2>details: </h2>
         <Details showDetails={namesFiltered.length > 1 ? namesFiltered : [] } showLangs={languages} title={nameTitle} capital={!capital ? null : `Capital: ${capital}`} area={!area ? null : `Area: ${area} km^2`} />
+        <Flag url={!flag ? null : `${flag}`}/>
         <Notification text={notification} />
 
       </div>
