@@ -35,7 +35,7 @@ function App() {
   const handleCountryName = (event) => {
     event.preventDefault();
     setCountry(event.target.value);
-    
+    setLanguages([]);
   }
 
   const handleSearchCountry = (event) => {
@@ -44,34 +44,45 @@ function App() {
     for (let i = 0; i < countries.length; i++) {
       if (countries[i]['name']['common'].toLowerCase().includes(country.toLowerCase())) {
         namesFiltered.push(countries[i]);
+        }
       }
-    }
-    if (namesFiltered.length > 10) {
-      setNotification('Too many results');
+      if (namesFiltered.length > 10) {
+        setNotification('Too many results');
+        setNamesFiltered([]);
+      } 
+      if (namesFiltered.length === 1) {
+        
+        let langObj = namesFiltered[0]['languages'];
+        for (let key in langObj) {
+              let temp = {};
+              temp['id'] = key;
+              temp['language'] = langObj[key];
+              languages.push(temp);
+          }
+        setLanguages(languages);
+        setFlag(namesFiltered[0]['flags']['png'])
+        setNameTitle(namesFiltered[0]['name']['common']);
+        setCapital(namesFiltered[0]['capital']);
+        setArea(namesFiltered[0]['area']);
+      } 
       setNamesFiltered([]);
-    } 
-    if (namesFiltered.length === 1) {
-      //setNamesFiltered([]);
-      handleLangs();
-      handleFlags();
-      setNameTitle(namesFiltered[0]['name']['common']);
-      setCapital(namesFiltered[0]['capital']);
-      setArea(namesFiltered[0]['area']);
-    } 
   }
 
   //helper
+  /*
   const handleLangs = () => {
     let langObj = namesFiltered[0]['languages'];
     for (let key in langObj) {
-      let temp = {};
-      temp['id'] = key;
-      temp['language'] = langObj[key];
-      languages.push(temp);
+          let temp = {};
+          temp['id'] = key;
+          temp['language'] = langObj[key];
+          languages.push(temp);
+      }
     }
   setLanguages(languages);
   }
-
+  */
+  /*
   //helper
   const handleFlags = () => {
     let flagObj = namesFiltered[0]['flags'];
@@ -81,7 +92,7 @@ function App() {
       }
     }
   }
-
+  */
 
   const reset = () =>{
     setCountry('');
@@ -103,7 +114,7 @@ function App() {
         <span><br></br></span>
         <Reset funcReset={reset} />
         <h2>details: </h2>
-        <Details showDetails={namesFiltered.length > 1 ? namesFiltered : [] } showLangs={languages} title={nameTitle} capital={!capital ? null : `Capital: ${capital}`} area={!area ? null : `Area: ${area} km^2`} />
+        <Details showDetails={namesFiltered.length > 1 ? namesFiltered : [] } showLangs={!languages ? null : languages} title={nameTitle} capital={!capital ? null : `Capital: ${capital}`} area={!area ? null : `Area: ${area} km^2`} />
         <Flag url={!flag ? null : `${flag}`}/>
         <Notification text={notification} />
 

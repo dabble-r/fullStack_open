@@ -8,9 +8,9 @@ const Details = (props) => {
         <p>{props.capital} </p>
         <p>{props.area}</p>
         
-        <h3>languages:</h3>
+        
         <ul>
-          {props.showLangs.map(ele=><li key={ele.id}>{ele.language}</li>)}
+          {props.showLangs.map(ele=><li key={ele.id}>language: {ele.language}</li>)}
         </ul>
      </div>
       <div>
