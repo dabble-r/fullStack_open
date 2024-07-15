@@ -3,6 +3,7 @@ import Form from './components/Form'
 import Filter from './components/Filter'
 import Details from './components/Details'
 import Reset from './components/Reset'
+import Notification from './components/Notification'
 import axios from 'axios'
 import './App.css'
 
@@ -11,6 +12,7 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState('');
   const [namesFiltered, setNamesFiltered] = useState([]);
+  const [notification, setNotification] = useState(null)
  
 
 
@@ -33,11 +35,17 @@ function App() {
   const handleSearchCountry = (event) => {
     event.preventDefault();
     for (let i = 0; i < countries.length; i++) {
-      if (countries[i]['name']['common'].toLowerCase().startsWith(country.toLowerCase())) {
+      if (countries[i]['name']['common'].toLowerCase().includes(country.toLowerCase())) {
         namesFiltered.push(countries[i]);
       }
     }
-    setNamesFiltered(namesFiltered);
+    if (namesFiltered.length > 10) {
+      setNotification('Too many results');
+      setNamesFiltered([])
+    } else {
+      setNamesFiltered(namesFiltered);
+    }
+    
   }
 
   const reset = () =>{
@@ -57,9 +65,11 @@ function App() {
         <p>debug: {country}</p>
         <Filter funcSearch={handleSearchCountry} />
         <span><br></br></span>
-        <Reset funcREset={reset} />
+        <Reset funcReset={reset} />
         <h2>details: </h2>
         <Details showDetails={namesFiltered} />
+        <Notification text={notification} />
+
       </div>
 
       
