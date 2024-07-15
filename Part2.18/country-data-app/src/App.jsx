@@ -12,7 +12,11 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState('');
   const [namesFiltered, setNamesFiltered] = useState([]);
-  const [notification, setNotification] = useState(null)
+  const [notification, setNotification] = useState(null);
+  const [nameTitle, setNameTitle] = useState('');
+  const [capital, setCapital] = useState('');
+  const [area, setArea] = useState('');
+  const [languages, setLanguages] = useState([]);
  
 
 
@@ -34,6 +38,7 @@ function App() {
 
   const handleSearchCountry = (event) => {
     event.preventDefault();
+
     for (let i = 0; i < countries.length; i++) {
       if (countries[i]['name']['common'].toLowerCase().includes(country.toLowerCase())) {
         namesFiltered.push(countries[i]);
@@ -41,17 +46,32 @@ function App() {
     }
     if (namesFiltered.length > 10) {
       setNotification('Too many results');
-      setNamesFiltered([])
-    } else {
-      setNamesFiltered(namesFiltered);
-    }
-    
+      setNamesFiltered([]);
+    } 
+    if (namesFiltered.length === 1) {
+      //setNamesFiltered([]);
+      let langObj = namesFiltered[0]['languages'];
+      
+      setNameTitle(namesFiltered[0]['name']['common']);
+      setCapital(namesFiltered[0]['capital']);
+      setArea(namesFiltered[0]['area']);
+        for (let key in langObj) {
+          let temp = {};
+          temp['id'] = key;
+          temp['language'] = langObj[key];
+          languages.push(temp);
+        }
+        
+      setLanguages(languages);
+      console.log(languages);
+    } 
   }
 
   const reset = () =>{
     setCountry('');
     setNamesFiltered([]);
   }
+
 
   return (
     <>
@@ -67,7 +87,7 @@ function App() {
         <span><br></br></span>
         <Reset funcReset={reset} />
         <h2>details: </h2>
-        <Details showDetails={namesFiltered} />
+        <Details showDetails={namesFiltered.length > 1 ? namesFiltered : [] } showLangs={languages} title={nameTitle} capital={!capital ? null : `Capital: ${capital}`} area={!area ? null : `Area: ${area} km^2`} />
         <Notification text={notification} />
 
       </div>
