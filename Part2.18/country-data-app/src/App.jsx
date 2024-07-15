@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
 import Form from './components/Form'
 import Filter from './components/Filter'
+import Details from './components/Details'
 import axios from 'axios'
 import './App.css'
 
 
 function App() {
-  const [countries, setCountries] = useState([])
+  const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState('');
-
+  const [name, setName] = useState('');
+  const [population, setPopulation] = useState('')
 
 
   useEffect(() => {
@@ -32,6 +34,8 @@ function App() {
     event.preventDefault();
     for (let i = 0; i < countries.length; i++) {
       if (countries[i]['name']['common'].toLowerCase() == country.toLowerCase()) {
+        setName(countries[i]['name']['common'])
+        setPopulation(countries[i]['population'])
         console.log(countries[i])
       }
     }
@@ -49,7 +53,7 @@ function App() {
         <p>debug: {country}</p>
         <Filter funcSearch={handleSearchCountry} />
         <h2>details: </h2>
-       
+        <Details name={name} population={population}/>
       </div>
       
       
