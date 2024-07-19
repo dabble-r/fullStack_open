@@ -5,6 +5,7 @@ import Details from './components/Details'
 import Reset from './components/Reset'
 import Notification from './components/Notification'
 import Flag from './components/Flag'
+import OneCountry from './components/OneCountry'
 import axios from 'axios'
 import './App.css'
 
@@ -20,6 +21,8 @@ function App() {
   const [area, setArea] = useState('');
   const [languages, setLanguages] = useState([]);
   const [flag, setFlag] = useState(null);
+  const [showCountry, setShowCountry] = useState('');
+  const [oneCountryLangs, setOneCountryLangs] = useState([]);
   
  
   useEffect(() => {
@@ -80,10 +83,37 @@ function App() {
 
       if (namesFiltered.length > 1 && namesFiltered.length < 10) {
           setShortList(namesFiltered)
+          console.log(shortList)
       }
-      
   }
 
+  const showOneCountry = (event) => {
+    event.preventDefault();
+     
+    console.log(oneCountryLangs)
+    console.log(shortList)
+    const countryCca3 = event.target.value;
+    const showOneCountry = shortList.filter(ele => ele['cca3'] == countryCca3)
+                                    .map(ele => ele);
+    //console.log(showOneCountry)                          
+    const name = showOneCountry[0]['name']['common'];
+    const capital = showOneCountry[0]['capital'];
+    const area = showOneCountry[0]['area'];
+    const flag = showOneCountry[0]['flags']['png'];
+    const langObj = showOneCountry[0]['languages'];
+    const countryObj = {'name': name, 'capital': capital, 'area': area, 'flag': flag};
+    let tempArr = [];
+      for (let key in langObj) {
+        let temp = {};
+        temp['id'] = key;
+        temp['language'] = langObj[key];
+        tempArr.push(temp)
+      }
+
+    countryObj['languages'] = tempArr;
+    setShowCountry(countryObj)
+    console.log(showCountry)
+  }
   //helper
   /*
   const handleLangs = () => {
@@ -112,14 +142,20 @@ function App() {
 
   const reset = () => {
     setCountry('');
-    let clear = [];
-    setNamesFiltered(clear);
-    setShortList(clear)
+    
+    setNamesFiltered([]);
+    setShortList([])
     setNameTitle('')
     setFlag(null)
     setLanguages([])
     setCapital('')
     setArea('')
+    setShowCountry('')
+    setOneCountryLangs([])
+  }
+
+  const resetOneCountryLangs = () => {
+    setOneCountryLangs([]);
   }
 
 
@@ -138,8 +174,10 @@ function App() {
         <span><br></br></span>
         <Reset funcReset={reset} />
         <h2>details: </h2>
-        <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} title={namesFiltered ? nameTitle : ''} capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
+        <OneCountry showOneLangs={showCountry.languages ? showCountry.languages : []} name={showCountry.name} area={showCountry.area} capital={showCountry.capital} />
+        <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} showFunc={showOneCountry} title={namesFiltered ? nameTitle : ''} capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
         <Flag url={!flag ? null : `${flag}`}/>
+        
         
 
       </div>

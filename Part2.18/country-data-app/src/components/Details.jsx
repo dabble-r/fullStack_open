@@ -20,7 +20,9 @@ const Details = (props) => {
     borderRadius: 5,
   }
  
-
+  const styleButton = {
+    cursor: 'pointer'
+  }
 
   return (
     <>
@@ -35,7 +37,7 @@ const Details = (props) => {
       </div>
         <div>
           <ul>
-            {props.showDetails.map(ele => <li key={ele['cca3']}> name: {ele['name']['common']} -- population: {ele['population']} </li>)}
+            {props.showDetails.map(ele => <li key={ele['cca3']} > name: {ele['name']['common']} -- population: {ele['population']} <button onClick={props.showFunc} value={ele['cca3']} style={styleButton}>show</button></li>)}
           </ul>
         </div>
     </div>
