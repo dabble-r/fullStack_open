@@ -42,6 +42,9 @@ function App() {
   
   const handleSearchCountry = (event) => {
     event.preventDefault();
+    if (namesFiltered || shortList) {
+      reset()
+    }
 
     for (let i = 0; i < countries.length; i++) {
       if (countries[i]['name']['common'].toLowerCase().includes(country.toLowerCase())) {
@@ -51,6 +54,7 @@ function App() {
       }
       
       if (namesFiltered.length > 10) {
+        reset();
         setNotification('Too many results')
         setTimeout(() => {
           setNotification('');
@@ -60,7 +64,6 @@ function App() {
       } 
 
       if (namesFiltered.length === 1) {
-        
         let langObj = namesFiltered[0]['languages'];
         for (let key in langObj) {
               let temp = {};
@@ -76,7 +79,6 @@ function App() {
       } 
 
       if (namesFiltered.length > 1 && namesFiltered.length < 10) {
-        
           setShortList(namesFiltered)
       }
       
@@ -110,10 +112,9 @@ function App() {
 
   const reset = () => {
     setCountry('');
-    let clearFiltered = [];
-    setNamesFiltered(clearFiltered);
-    let clearShortList = [];
-    setShortList(clearShortList)
+    let clear = [];
+    setNamesFiltered(clear);
+    setShortList(clear)
     setNameTitle('')
     setFlag(null)
     setLanguages([])
