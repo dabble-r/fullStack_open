@@ -13,15 +13,15 @@ function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState('');
   const [namesFiltered, setNamesFiltered] = useState([]);
-  const [notification, setNotification] = useState(null);
+  const [shortList, setShortList] = useState([]);
+  const [notification, setNotification] = useState('');
   const [nameTitle, setNameTitle] = useState('');
   const [capital, setCapital] = useState('');
   const [area, setArea] = useState('');
   const [languages, setLanguages] = useState([]);
   const [flag, setFlag] = useState(null);
+  
  
-
-
   useEffect(() => {
     if (countries) {
       axios
@@ -32,24 +32,33 @@ function App() {
     }
   }, [countries])
   
+  
   const handleCountryName = (event) => {
     event.preventDefault();
+    reset();
     setCountry(event.target.value);
-    setLanguages([]);
   }
 
+  
   const handleSearchCountry = (event) => {
     event.preventDefault();
 
     for (let i = 0; i < countries.length; i++) {
       if (countries[i]['name']['common'].toLowerCase().includes(country.toLowerCase())) {
         namesFiltered.push(countries[i]);
+        setNamesFiltered(namesFiltered)
         }
       }
+      
       if (namesFiltered.length > 10) {
-        setNotification('Too many results');
-        setNamesFiltered([]);
+        setNotification('Too many results')
+        setTimeout(() => {
+          setNotification('');
+          setNamesFiltered([]);
+        },1000)
+        
       } 
+
       if (namesFiltered.length === 1) {
         
         let langObj = namesFiltered[0]['languages'];
@@ -65,7 +74,12 @@ function App() {
         setCapital(namesFiltered[0]['capital']);
         setArea(namesFiltered[0]['area']);
       } 
-      setNamesFiltered([]);
+
+      if (namesFiltered.length > 1 && namesFiltered.length < 10) {
+        
+          setShortList(namesFiltered)
+      }
+      
   }
 
   //helper
@@ -94,9 +108,17 @@ function App() {
   }
   */
 
-  const reset = () =>{
+  const reset = () => {
     setCountry('');
-    setNamesFiltered([]);
+    let clearFiltered = [];
+    setNamesFiltered(clearFiltered);
+    let clearShortList = [];
+    setShortList(clearShortList)
+    setNameTitle('')
+    setFlag(null)
+    setLanguages([])
+    setCapital('')
+    setArea('')
   }
 
 
@@ -105,6 +127,7 @@ function App() {
     
       <div>
         <h1> Country Finder </h1>
+        <Notification text={notification} />
       </div>
       <div>
         <h2>search country: </h2>
@@ -114,9 +137,9 @@ function App() {
         <span><br></br></span>
         <Reset funcReset={reset} />
         <h2>details: </h2>
-        <Details showDetails={namesFiltered.length > 1 ? namesFiltered : [] } showLangs={!languages ? null : languages} title={nameTitle} capital={!capital ? null : `Capital: ${capital}`} area={!area ? null : `Area: ${area} km^2`} />
+        <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} title={namesFiltered ? nameTitle : ''} capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
         <Flag url={!flag ? null : `${flag}`}/>
-        <Notification text={notification} />
+        
 
       </div>
 

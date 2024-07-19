@@ -2,7 +2,7 @@ const Notification = (props) => {
   return (
     <>
       <div>
-        <p>{props.text}</p>
+        <h1>{props.text}</h1>
       </div>
     </>
   )
