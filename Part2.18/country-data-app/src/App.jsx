@@ -23,7 +23,12 @@ function App() {
   const [flag, setFlag] = useState(null);
   const [showCountry, setShowCountry] = useState('');
   const [oneCountryLangs, setOneCountryLangs] = useState([]);
-  
+  const [weather, setWeather] = useState('');
+
+  const weatherKey ='eb5a6d5e7f101c2a76f277372a663c16';
+  //const weatherBaseUrl = 'https://openweathermap.org/find';
+  const client = axios.create({baseURL: 'http://api.openweathermap.org/data/2.5/forecast'});
+
  
   useEffect(() => {
     if (countries) {
@@ -85,6 +90,7 @@ function App() {
           setShortList(namesFiltered)
           console.log(shortList)
       }
+      getWeather();
   }
 
   const showOneCountry = (event) => {
@@ -113,32 +119,57 @@ function App() {
     countryObj['languages'] = tempArr;
     setShowCountry(countryObj)
     setFlag(countryObj.flag)
+    getWeather();
     //console.log(countryObj.flag)
   }
-  //helper
-  /*
-  const handleLangs = () => {
-    let langObj = namesFiltered[0]['languages'];
-    for (let key in langObj) {
-          let temp = {};
-          temp['id'] = key;
-          temp['language'] = langObj[key];
-          languages.push(temp);
-      }
+
+
+  const getWeather = async () => {
+    const requestParams = `?id=524901&appid=${weatherKey}`;
+    let cityEndpoint = '';
+    
+    if (capital) {
+      cityEndpoint = capital;
     }
-  setLanguages(languages);
-  }
-  */
-  /*
-  //helper
-  const handleFlags = () => {
-    let flagObj = namesFiltered[0]['flags'];
-    for (let key in flagObj) {
-      if (key === 'png') {
-        setFlag(flagObj[key]);
+    if (showCountry.capital) {
+      cityEndpoint = showCountry.capital;
+    }
+    const urlToGet = `${cityEndpoint}${requestParams}`;
+    try {
+      const response = await client.get(urlToGet);
+      console.log(response);
+      if (response.status === 200) {
+        const weatherObj = await response.data;
+        //console.log(weatherObj);
+        setWeather(weatherObj)
       }
+    } catch (error) {
+      console.log(error)
     }
   }
+    
+
+  // asycn guide
+  /*
+  const getMovieInfo = async (movie) => { 
+      const movieId = movie.id
+      const movieEndpoint = `/movie/${movieId}`;
+      const requestParams = `?api_key=${tmdbKey}`;
+      const urlToGet = `${movieEndpoint}${requestParams}`;
+      if (randomMovie) {
+        try {
+          const response = await client.get(urlToGet);
+           console.log(response)
+          if (response.status === 200) {
+            const movieObj = await response.data;
+            setMovieInfo(movieObj);
+            setPosterPath(movieObj['poster_path']);
+          }
+        } catch(error) {
+          console.log(error);
+        }
+      }
+  };
   */
 
   const reset = () => {
@@ -177,7 +208,7 @@ function App() {
         <h2>details: </h2>
 
         <OneCountry showOneLangs={showCountry.languages ? showCountry.languages : []} name={showCountry.name ? `Name: ${showCountry.name}`:''} 
-        area={showCountry.area ? `Area: ${showCountry.area} km2` : ''} capital={showCountry.capital ? `Capital: ${showCountry.capital}` : ''} />
+        area={showCountry.area ? `Area: ${showCountry.area} km^2` : ''} capital={showCountry.capital ? `Capital: ${showCountry.capital}` : ''} />
 
         <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} showFunc={showOneCountry} title={namesFiltered ? nameTitle : ''} 
         capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
