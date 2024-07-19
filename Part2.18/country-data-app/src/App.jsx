@@ -6,6 +6,7 @@ import Reset from './components/Reset'
 import Notification from './components/Notification'
 import Flag from './components/Flag'
 import OneCountry from './components/OneCountry'
+import WeatherCurrent from './components/WeatherCurrent'
 import axios from 'axios'
 import './App.css'
 
@@ -23,11 +24,14 @@ function App() {
   const [flag, setFlag] = useState(null);
   const [showCountry, setShowCountry] = useState('');
   const [oneCountryLangs, setOneCountryLangs] = useState([]);
-  const [weather, setWeather] = useState('');
+  const [lat, setLat] = useState('');
+  const [long, setLong] = useState('');
+  const [weatherForecast, setWeatherForecast] = useState('');
+  const [weatherCurrent, setWeatherCurrent] = useState('');
 
   const weatherKey ='eb5a6d5e7f101c2a76f277372a663c16';
   //const weatherBaseUrl = 'https://openweathermap.org/find';
-  const client = axios.create({baseURL: 'http://api.openweathermap.org/data/2.5/forecast'});
+  const client = axios.create({baseURL: 'http://api.openweathermap.org/data/2.5'});
 
  
   useEffect(() => {
@@ -72,6 +76,7 @@ function App() {
       } 
 
       if (namesFiltered.length === 1) {
+        console.log(namesFiltered)
         let langObj = namesFiltered[0]['languages'];
         for (let key in langObj) {
               let temp = {};
@@ -84,20 +89,24 @@ function App() {
         setNameTitle(namesFiltered[0]['name']['common']);
         setCapital(namesFiltered[0]['capital']);
         setArea(namesFiltered[0]['area']);
+        setLat(namesFiltered[0].latlng[0])
+        setLong(namesFiltered[0].latlng[1]);
       } 
 
       if (namesFiltered.length > 1 && namesFiltered.length < 10) {
           setShortList(namesFiltered)
-          console.log(shortList)
+          //console.log(shortList)
       }
-      getWeather();
+     // getWeatherForecast();
+      getWeatherCurrent();
+      
   }
-
+  
   const showOneCountry = (event) => {
     event.preventDefault();
      
-    console.log(oneCountryLangs)
-    console.log(shortList)
+    //console.log(oneCountryLangs)
+    //console.log(shortList)
     const countryCca3 = event.target.value;
     const showOneCountry = shortList.filter(ele => ele['cca3'] == countryCca3)
                                     .map(ele => ele);
@@ -107,6 +116,8 @@ function App() {
     const area = showOneCountry[0]['area'];
     const flag = showOneCountry[0]['flags']['png'];
     const langObj = showOneCountry[0]['languages'];
+    const latitude = showOneCountry[0].latlng[0];
+    const longitude = showOneCountry[0].latlng[1];
     const countryObj = {'name': name, 'capital': capital, 'area': area, 'flag': flag};
     let tempArr = [];
       for (let key in langObj) {
@@ -119,12 +130,14 @@ function App() {
     countryObj['languages'] = tempArr;
     setShowCountry(countryObj)
     setFlag(countryObj.flag)
-    getWeather();
-    //console.log(countryObj.flag)
+    setLat(latitude)
+    setLong(longitude);
+   // getWeatherForecast();
+    getWeatherCurrent();
   }
 
-
-  const getWeather = async () => {
+/*
+  const getWeatherForecast = async () => {
     const requestParams = `?id=524901&appid=${weatherKey}`;
     let cityEndpoint = '';
     
@@ -137,17 +150,38 @@ function App() {
     const urlToGet = `${cityEndpoint}${requestParams}`;
     try {
       const response = await client.get(urlToGet);
-      console.log(response);
+      //console.log(response);
       if (response.status === 200) {
-        const weatherObj = await response.data;
-        //console.log(weatherObj);
-        setWeather(weatherObj)
+        const weatherForecastObj = await response.data.list[0];
+        //console.log(weatherForecastObj);
+        setWeatherForecast(weatherForecastObj)
       }
     } catch (error) {
       console.log(error)
     }
   }
+    */
+  const getWeatherCurrent = async () => {
+    const requestParams = `?lat=${lat}&lon=${long}&appid=${weatherKey}&units=metric`;
+    const currEndpoint = '/weather';
+    const urlToGet = `${currEndpoint}${requestParams}`;
+    if (lat || long) {
+      try {
+        const response = await client.get(urlToGet);
+        //console.log(response);
+        if (response.status === 200) {
+          const weatherCurrentObj = await response.data;
+          //console.log(weatherCurrentObj);
+          setWeatherCurrent(weatherCurrentObj)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
     
+    //console.log(shortList)
+    //console.log(showCountry)
+  }
 
   // asycn guide
   /*
@@ -183,6 +217,9 @@ function App() {
     setArea('')
     setShowCountry('')
     setOneCountryLangs([])
+    setLat('')
+    setLong('')
+    setWeatherCurrent('')
   }
 
   
@@ -209,6 +246,8 @@ function App() {
 
         <OneCountry showOneLangs={showCountry.languages ? showCountry.languages : []} name={showCountry.name ? `Name: ${showCountry.name}`:''} 
         area={showCountry.area ? `Area: ${showCountry.area} km^2` : ''} capital={showCountry.capital ? `Capital: ${showCountry.capital}` : ''} />
+
+        <WeatherCurrent actualTemp={weatherCurrent ? `Temp : ${weatherCurrent.main.temp} C` : ''} />
 
         <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} showFunc={showOneCountry} title={namesFiltered ? nameTitle : ''} 
         capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
