@@ -142,7 +142,6 @@ function App() {
 
   const reset = () => {
     setCountry('');
-    
     setNamesFiltered([]);
     setShortList([])
     setNameTitle('')
@@ -154,9 +153,7 @@ function App() {
     setOneCountryLangs([])
   }
 
-  const resetOneCountryLangs = () => {
-    setOneCountryLangs([]);
-  }
+  
 
 
   return (
@@ -169,13 +166,20 @@ function App() {
       <div>
         <h2>search country: </h2>
         <Form funcName={handleCountryName} varCountry={country} />
+
         <p>debug: {country}</p>
         <Filter funcSearch={handleSearchCountry} />
         <span><br></br></span>
+
         <Reset funcReset={reset} />
+
         <h2>details: </h2>
-        <OneCountry showOneLangs={showCountry.languages ? showCountry.languages : []} name={showCountry.name} area={showCountry.area} capital={showCountry.capital} />
+
+        <OneCountry showOneLangs={showCountry.languages ? showCountry.languages : []} name={showCountry.name ? `Name: ${showCountry.name}`:''} 
+        area={showCountry.area ? `Area: ${showCountry.area} km2` : ''} capital={showCountry.capital ? `Capital: ${showCountry.capital}` : ''} />
+
         <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} showFunc={showOneCountry} title={namesFiltered ? nameTitle : ''} capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
+
         <Flag url={!flag ? null : `${flag}`}/>
         
         

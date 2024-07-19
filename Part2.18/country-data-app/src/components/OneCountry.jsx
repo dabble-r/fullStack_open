@@ -1,7 +1,7 @@
 const OneCountry = (props) => {
 
     const styleOneCountry = {
-      float: 'right',
+      float: 'left',
       borderStlye: 'solid',
       borderRadius: 10
     }
@@ -16,8 +16,8 @@ const OneCountry = (props) => {
               <h3>{props.area}</h3>
               <h3>{props.capital}</h3>
               <div>
-                <ul>
-                    {props.showOneLangs.map(ele=> <li key={ele.id}>{ele.language}</li>)}
+                <ul> 
+                    {props.showOneLangs.map(ele=> <li key={ele.id}>language: {ele.language}</li>)}
                 </ul>
                 
               </div>

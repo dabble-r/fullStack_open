@@ -8,6 +8,7 @@ const Details = (props) => {
     borderStyle: 'solid',
     borderColor: 'black',
     borderRadius: 5,
+    float: 'left',
   }
 
   const styleDetailsF = {
