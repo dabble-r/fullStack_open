@@ -19,7 +19,9 @@ const OneCountry = (props) => {
                 <ul> 
                     {props.showOneLangs.map(ele=> <li key={ele.id}>language: {ele.language}</li>)}
                 </ul>
-                
+              </div>
+              <div>
+                <img src={props.path}/>
               </div>
           </div>
       </>

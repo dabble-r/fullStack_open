@@ -112,7 +112,8 @@ function App() {
 
     countryObj['languages'] = tempArr;
     setShowCountry(countryObj)
-    console.log(showCountry)
+    setFlag(countryObj.flag)
+    //console.log(countryObj.flag)
   }
   //helper
   /*
@@ -178,7 +179,8 @@ function App() {
         <OneCountry showOneLangs={showCountry.languages ? showCountry.languages : []} name={showCountry.name ? `Name: ${showCountry.name}`:''} 
         area={showCountry.area ? `Area: ${showCountry.area} km2` : ''} capital={showCountry.capital ? `Capital: ${showCountry.capital}` : ''} />
 
-        <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} showFunc={showOneCountry} title={namesFiltered ? nameTitle : ''} capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
+        <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} showFunc={showOneCountry} title={namesFiltered ? nameTitle : ''} 
+        capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
 
         <Flag url={!flag ? null : `${flag}`}/>
         
