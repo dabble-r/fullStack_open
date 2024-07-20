@@ -4,7 +4,7 @@ const OneCountry = (props) => {
   return (
       <>
           <div className="column">
-              <h1>Details:</h1>
+              
               <h2>{props.name}</h2>
               <span><br></br></span>
               <h3>{props.area}</h3>

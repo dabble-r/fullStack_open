@@ -235,12 +235,11 @@ function App() {
 
   return (
     <>
-      <div>
-
+      <div className="row">
+            <h1 id="header">Country Finder</h1>
           
             <Notification text={notification} />
           
-
          
             <Form funcName={handleCountryName} varCountry={country} />
             <p>debug: {country}</p>

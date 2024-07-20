@@ -1,3 +1,9 @@
+
+#header {
+  text-align: center;
+}
+
+
 /* Create three equal columns that float next to each other */
 .column {
   float: left;
