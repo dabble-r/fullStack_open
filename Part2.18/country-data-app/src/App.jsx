@@ -44,6 +44,29 @@ function App() {
     }
   }, [countries])
   
+  useEffect(() => {
+    if (lat && long) {
+      async function getWeatherCurrent() {
+        const requestParams = `?lat=${lat}&lon=${long}&appid=${weatherKey}&units=metric`;
+        const currEndpoint = '/weather';
+        const urlToGet = `${currEndpoint}${requestParams}`;
+        
+          try {
+            const response = await client.get(urlToGet);
+            //console.log(response);
+            if (response.status === 200) {
+              const weatherCurrentObj = await response.data;
+              console.log(weatherCurrentObj);
+              setWeatherCurrent(weatherCurrentObj)
+            }
+          } catch (error) {
+            console.log(error)
+          }
+      }
+      getWeatherCurrent();
+    }
+  },[lat,long, weatherKey])
+    
   
   const handleCountryName = (event) => {
     event.preventDefault();
@@ -98,7 +121,7 @@ function App() {
           //console.log(shortList)
       }
      // getWeatherForecast();
-      getWeatherCurrent();
+     
       
   }
   
@@ -133,7 +156,7 @@ function App() {
     setLat(latitude)
     setLong(longitude);
    // getWeatherForecast();
-    getWeatherCurrent();
+    
   }
 
 /*
@@ -160,28 +183,13 @@ function App() {
       console.log(error)
     }
   }
-    */
-  const getWeatherCurrent = async () => {
-    const requestParams = `?lat=${lat}&lon=${long}&appid=${weatherKey}&units=metric`;
-    const currEndpoint = '/weather';
-    const urlToGet = `${currEndpoint}${requestParams}`;
-    if (lat || long) {
-      try {
-        const response = await client.get(urlToGet);
-        //console.log(response);
-        if (response.status === 200) {
-          const weatherCurrentObj = await response.data;
-          //console.log(weatherCurrentObj);
-          setWeatherCurrent(weatherCurrentObj)
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    }
+*/
+
+
     
     //console.log(shortList)
     //console.log(showCountry)
-  }
+  
 
   // asycn guide
   /*
@@ -227,39 +235,43 @@ function App() {
 
   return (
     <>
-    
       <div>
-        <h1> Country Finder </h1>
-        <Notification text={notification} />
-      </div>
-      <div>
-        <h2>search country: </h2>
-        <Form funcName={handleCountryName} varCountry={country} />
 
-        <p>debug: {country}</p>
-        <Filter funcSearch={handleSearchCountry} />
-        <span><br></br></span>
+          
+            <Notification text={notification} />
+          
 
-        <Reset funcReset={reset} />
+         
+            <Form funcName={handleCountryName} varCountry={country} />
+            <p>debug: {country}</p>
+         
 
-        <h2>details: </h2>
+         
+            <Filter funcSearch={handleSearchCountry} />
+            <span><br></br></span>
+            <Reset funcReset={reset} />
+          
+            
+          
+            <OneCountry showOneLangs={showCountry.languages ? showCountry.languages : []} name={showCountry.name ? `Name: ${showCountry.name}`:''} 
+              area={showCountry.area ? `Area: ${showCountry.area} km^2` : ''} capital={showCountry.capital ? `Capital: ${showCountry.capital}` : ''} />
+          
 
-        <OneCountry showOneLangs={showCountry.languages ? showCountry.languages : []} name={showCountry.name ? `Name: ${showCountry.name}`:''} 
-        area={showCountry.area ? `Area: ${showCountry.area} km^2` : ''} capital={showCountry.capital ? `Capital: ${showCountry.capital}` : ''} />
+          
+            <WeatherCurrent actualTemp={weatherCurrent ? `Temp : ${weatherCurrent.main.temp} C` : ''} />
+         
 
-        <WeatherCurrent actualTemp={weatherCurrent ? `Temp : ${weatherCurrent.main.temp} C` : ''} />
+          
+            <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} showFunc={showOneCountry} title={namesFiltered ? nameTitle : ''} 
+              capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
+         
 
-        <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} showFunc={showOneCountry} title={namesFiltered ? nameTitle : ''} 
-        capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
+          
+          
+            <Flag url={!flag ? null : `${flag}`}/> 
+          
 
-        <Flag url={!flag ? null : `${flag}`}/>
-        
-        
-
-      </div>
-
-      
-      
+      </div>      
     </>
   )
 }

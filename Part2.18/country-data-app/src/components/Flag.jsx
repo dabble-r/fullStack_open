@@ -1,14 +1,10 @@
 
 const Flag = (props) => {
-  const styleFlag = {
-      height: '100%',
-      width: '100%',
-      float: 'left'
-  }
+  
 
   return (
     <>
-      <div style={styleFlag}>
+      <div>
         <img src={props.url}/>
       </div>
     </>

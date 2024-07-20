@@ -1,16 +1,10 @@
 const OneCountry = (props) => {
 
-    const styleOneCountry = {
-      float: 'left',
-      borderStlye: 'solid',
-      borderRadius: 10
-    }
-
-
 
   return (
       <>
-          <div style={styleOneCountry}>
+          <div className="column">
+              <h1>Details:</h1>
               <h2>{props.name}</h2>
               <span><br></br></span>
               <h3>{props.area}</h3>
@@ -23,6 +17,9 @@ const OneCountry = (props) => {
               <div>
                 <img src={props.path}/>
               </div>
+          </div>
+          <div >
+
           </div>
       </>
 

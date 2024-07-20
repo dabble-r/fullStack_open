@@ -1,33 +1,10 @@
 
 const Details = (props) => {
-  const styleDetailsT = {
-    width:  500,
-    margin:  32,
-    padding: 32,
-    border: 1,
-    borderStyle: 'solid',
-    borderColor: 'black',
-    borderRadius: 5,
-    float: 'left',
-  }
-
-  const styleDetailsF = {
-    width:  'auto',
-    margin:  32,
-    padding: 32,
-    border: 1,
-    borderStyle: 'hidden',
-    borderColor: 'black',
-    borderRadius: 5,
-  }
  
-  const styleButton = {
-    cursor: 'pointer'
-  }
-
+  
   return (
     <>
-    <div style={styleDetailsT}>
+    <div className="column">
       <h2>{props.title}</h2>
       <div>
           <p>{props.capital} </p>
@@ -38,9 +15,12 @@ const Details = (props) => {
       </div>
         <div>
           <ul>
-            {props.showDetails.map(ele => <li key={ele['cca3']} > name: {ele['name']['common']} -- population: {ele['population']} <button onClick={props.showFunc} value={ele['cca3']} style={styleButton}>show</button></li>)}
+            {props.showDetails.map(ele => <li key={ele['cca3']} > name: {ele['name']['common']} -- population: {ele['population']} <button onClick={props.showFunc} value={ele['cca3']} >show</button></li>)}
           </ul>
         </div>
+    </div>
+    <div>
+
     </div>
      
       

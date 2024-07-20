@@ -1,16 +1,13 @@
 
 const WeatherCurrent = (props) => {
-  const styleDiv = {
-    float: 'right',
-    borderStyle: 'solid'
-    
-  }
+ 
 
   return (
       <>
-        <div style={styleDiv}>
+        <div className="column">
           <h2>{props.actualTemp}</h2>
         </div>
+        <div></div>
       </>
   )
 }

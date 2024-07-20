@@ -5,6 +5,7 @@ const Form = (props) => {
           <>
             <form>
               <div>
+                <h1>Search Country:</h1>
                 <input value={props.varCountry} onChange={props.funcName}/>
               </div>
             </form>
