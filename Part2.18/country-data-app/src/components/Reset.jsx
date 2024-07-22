@@ -1,15 +1,13 @@
 
 const Reset = (props) => {
-  const styleButton = {
-    cursor: 'pointer'
-  }
+  
 
   return (
     <>
 
       <div>
         <form onSubmit={props.funcReset}>
-          <button type='submit' style={styleButton}>Reset</button>
+          <button type='submit' className="button">Reset</button>
         </form>
       </div>
     

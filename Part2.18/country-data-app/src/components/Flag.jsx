@@ -4,7 +4,7 @@ const Flag = (props) => {
 
   return (
     <>
-      <div>
+      <div className="flag">
         <img src={props.url}/>
       </div>
     </>

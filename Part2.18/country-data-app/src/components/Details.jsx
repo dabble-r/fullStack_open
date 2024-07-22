@@ -16,7 +16,7 @@ const Details = (props) => {
         <div className="row">
           <h2>{props.header}</h2>
           <ul>
-            {props.showDetails.map(ele => <li key={ele['cca3']} > name: {ele['name']['common']} -- population: {ele['population']} <button onClick={props.showFunc} value={ele['cca3']} >show</button></li>)}
+            {props.showDetails.map(ele => <li key={ele['cca3']} > name: {ele['name']['common']} -- population: {ele['population']} <button className= "button" onClick={props.showFunc} value={ele['cca3']} >show</button></li>)}
           </ul>
         </div>
       

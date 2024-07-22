@@ -236,13 +236,13 @@ function App() {
   return (
     <>
       <div>
-            <h1 id="header">Country Finder</h1>
+            <h1 className="header" id="header-title">Country Finder</h1>
           
             <Notification text={notification} />
           
          
             <Form funcName={handleCountryName} varCountry={country} />
-            <p>debug: {country}</p>
+            
          
 
          
@@ -260,12 +260,9 @@ function App() {
             <WeatherCurrent actualTemp={weatherCurrent ? `Temp : ${weatherCurrent.main.temp} C` : ''} />
          
 
-          
             <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} showFunc={showOneCountry} title={namesFiltered ? nameTitle : ''} 
-              capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} header={showCountry.length ? '' : 'Matches:'} />
+              capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} header={namesFiltered.length == 1 ? '' : 'Matches:'} />
          
-
-          
           
             <Flag url={!flag ? null : `${flag}`}/> 
           

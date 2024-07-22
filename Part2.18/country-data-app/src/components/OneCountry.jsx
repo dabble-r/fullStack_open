@@ -21,7 +21,7 @@ const OneCountry = (props) => {
               <div className="row">
                 <img src={props.path}/>
               </div>
-              
+
           </div>
       </>
   )
