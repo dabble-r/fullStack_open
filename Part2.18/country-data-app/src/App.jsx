@@ -235,7 +235,7 @@ function App() {
 
   return (
     <>
-      <div className="row">
+      <div>
             <h1 id="header">Country Finder</h1>
           
             <Notification text={notification} />
@@ -262,7 +262,7 @@ function App() {
 
           
             <Details showDetails={shortList ? shortList : []} showLangs={languages ? languages : []} showFunc={showOneCountry} title={namesFiltered ? nameTitle : ''} 
-              capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} />
+              capital={!capital ? '' : `Capital: ${capital}`} area={!area ? '' : `Area: ${area} km^2`} header={showCountry.length ? '' : 'Matches:'} />
          
 
           
